@@ -1,0 +1,7 @@
+{
+    "dependencies": {
+      "@apollo/gateway": "latest",
+      "apollo-server": "latest",
+      "graphql": "latest"
+    }
+  }
