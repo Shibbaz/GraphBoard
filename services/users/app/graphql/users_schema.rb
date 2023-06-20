@@ -4,6 +4,7 @@ class UsersSchema < GraphQL::Schema
   query(Types::QueryType)
   mutation(Types::MutationType)
   orphan_types Types::UserType
+  use GraphQL::FragmentCache
 
   use GraphQL::Batch
   use ApolloFederation::Tracing

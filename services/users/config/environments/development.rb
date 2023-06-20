@@ -17,18 +17,13 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
-  # Enable/disable caching. By default caching is disabled.
-  # Run rails dev:cache to toggle caching.
-  if Rails.root.join("tmp/caching-dev.txt").exist?
-    config.cache_store = :memory_store
-    config.public_file_server.headers = {
-      "Cache-Control" => "public, max-age=#{2.days.to_i}"
-    }
-  else
-    config.action_controller.perform_caching = false
+  config.action_dispatch.rack_cache = {
+    metastore: "redis://localhost:6379/1/metastore",
+    entitystore: "redis://localhost:6379/1/entitystore"
+  }
 
-    config.cache_store = :null_store
-  end
+  config.active_record.async_query_executor = :global_thread_pool
+  config.active_record.global_executor_concurrency = 100
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local

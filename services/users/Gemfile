@@ -71,3 +71,7 @@ gem "rails_event_store"
 group :test do
   gem "ruby_event_store-rspec"
 end
+gem 'graphql-fragment_cache'
+gem "redis-rails", "~> 5.0"
+
+gem "redis-rack-cache", "~> 2.2"
