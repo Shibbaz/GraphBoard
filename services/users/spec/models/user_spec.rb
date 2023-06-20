@@ -64,11 +64,12 @@ RSpec.describe User, type: :model do
     end
 
     it 'expects argument technologies to be validated as array' do
-      expect(user.technologies.class).to be(Array)
+      expect(user[:technologies].class).to be(Array)
     end
 
     it 'expects argument technologies not to be validated' do
-      expect{create(:user, technologies: [])}.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Technologies can't be blank")
+      user = create(:user, technologies: [])
+      expect(user[:technologies].size).to eq(0)
     end
 
     it 'expects argument birthday to be validated as ActiveSupport::TimeWithZone' do

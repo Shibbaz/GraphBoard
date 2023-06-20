@@ -7,7 +7,7 @@ FactoryBot.define do
     description { "LoremIpsumLoremIpsumLoremIpsumLoremIpsumLoremIpsumLoremIpsumLoremIpsum" }
     email { Faker::Internet.email }
     password { Faker::Internet.password }
-    technologies { [{ name: "Ruby" }] }
+    technologies { [{ name: "Ruby", experience: "2 years" }] }
     birthday { Faker::Date.birthday }
   end
 end

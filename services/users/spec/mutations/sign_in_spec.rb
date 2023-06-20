@@ -11,7 +11,7 @@ module Mutations
                 end
 
                 let(:result) do
-                    Mutations::SignInUser.new(object: nil, field: nil, context: { ip: Faker::Internet.ip_v4_address, session: {} }).resolve(credentials: {
+                    Mutations::SignInUser.new(object: nil, field: nil, context: { session: {} }).resolve(credentials: {
                                                                                                             email: user.email,
                                                                                                             password: user.password
                                                                                                           })
