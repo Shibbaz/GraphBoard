@@ -1,7 +1,10 @@
 {
     "dependencies": {
-      "@apollo/gateway": "latest",
-      "apollo-server": "latest",
-      "graphql": "latest"
+        "@apollo/gateway": "latest",
+        "apollo-log": "^1.1.0",
+        "apollo-server": "latest",
+        "graphql": "latest",
+        "graphql-request": "latest",
+        "make-fetch-happen": "^11.1.1"
     }
-  }
+}
