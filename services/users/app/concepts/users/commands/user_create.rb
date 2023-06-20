@@ -14,7 +14,7 @@ module Concepts
                         phone: informations[:phone],
                         description: informations[:description],
                         technologies: informations[:technologies],
-                        birthday: informations[:birthday].to_date,
+                        birthday: informations[:birthday],
                         email: auth_provider&.[](:email),
                         password: auth_provider&.[](:password)
                     )
