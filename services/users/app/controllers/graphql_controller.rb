@@ -50,11 +50,10 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    return unless request.headers['Authorization']
-
+    return if request.env["HTTP_AUTHORIZATION"] == "undefined"
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify request.headers['Authorization']
-    user_id = token.gsub('user-id:', '').to_i
+    token = crypt.decrypt_and_verify request.env["HTTP_AUTHORIZATION"]
+    user_id = token.gsub('user-id:', '')
     User.find user_id
   rescue ActiveSupport::MessageVerifier::InvalidSignature
     nil

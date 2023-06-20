@@ -8,19 +8,25 @@ const plugins = [ApolloLogPlugin];
 
 const gateway = new ApolloGateway({
     supergraphSdl,
+    buildService({ url }) {
+      return new RemoteGraphQLDataSource({
+        url,
+        willSendRequest({ request, context }) {
+          request.http.headers.set("Authorization", " " + context.authorizationHeader);
+        }
+      });
+    }
 });
+
 
 const server = new ApolloServer({
     gateway,
-    plugins,
     context: ({ req }) => {
-        return {
-          serverRequest: req,
-          Headers: {
-            "Authorization": req.headers.authorization
-          }
-        };
-    }
+      return {
+        serverRequest: req,
+        authorizationHeader: req.headers.authorization
+      };
+  }
 });
 
 server.listen().then(({ url }) => {
