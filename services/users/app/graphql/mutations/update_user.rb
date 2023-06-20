@@ -2,17 +2,11 @@ module Mutations
   class UpdateUser < Mutations::BaseMutation
     field :user, Types::UserType, null: true
 
-    argument :id, GraphQL::Types::ID, required: true
     argument :attributes, Types::Input::UserInput, required: true
     
-    def resolve(attributes:, id:)
-      model = User.find(id)
-
-      if model.update_attributes(attributes.to_h)
-        {user: model}
-      else
-        model_errors!(model)
-      end
+    def resolve(attributes:)
+      Authenticate.call(context: context)
+      Concepts::Users::Repository.new.update(current_user: context[:current_user], args: attributes.to_h)
     end
   end
 end

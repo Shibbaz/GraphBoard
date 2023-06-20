@@ -6,7 +6,7 @@ class UsersSchema < GraphQL::Schema
   orphan_types Types::UserType
 
   use GraphQL::Batch
-
+  use ApolloFederation::Tracing
   # Union and Interface Resolution
   def self.resolve_type(abstract_type, obj, ctx)
     # TODO: Implement this function

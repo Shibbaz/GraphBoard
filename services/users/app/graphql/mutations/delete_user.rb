@@ -1,14 +1,13 @@
 module Mutations
   class DeleteUser < Mutations::BaseMutation
-    field :user, Types::UserType, null: true
+    field :status, Integer, null: false
 
-    argument :id, GraphQL::Types::ID, required: true
-
-    def resolve(id:)
-      model = User.find(id)
-
-      model.destroy
-      {user: model}
+    def resolve
+      Authenticate.call(context: context)
+      Concepts::Users::Repository.new.delete(current_user: context[:current_user])
+      { status: 200 }
+    rescue => e
+      GraphQL::ExecutionError.new(e.message)
     end
   end
 end
