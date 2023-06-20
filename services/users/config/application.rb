@@ -13,5 +13,8 @@ module Users
       [File.expand_path('../factories', __FILE__)] if defined?(FactoryBotRails)
     config.eager_load_paths += Dir[Rails.root.join('app/concepts/**/**/**.rb')].each { |rb| require rb }
     config.eager_load_paths += Dir[Rails.root.join('app/lib/**.rb')].each { |rb| require rb }
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options  
   end
 end

@@ -8,10 +8,11 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    byebug
     context = {
       current_user: current_user,
-      session: session
+      session: session,
+      tracing_enabled: ApolloFederation::Tracing.should_add_traces(request.headers),
+
     }
     result = UsersSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
@@ -49,10 +50,10 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    return unless session[:token]
+    return unless request.headers['Authorization']
 
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
-    token = crypt.decrypt_and_verify session[:token]
+    token = crypt.decrypt_and_verify request.headers['Authorization']
     user_id = token.gsub('user-id:', '').to_i
     User.find user_id
   rescue ActiveSupport::MessageVerifier::InvalidSignature

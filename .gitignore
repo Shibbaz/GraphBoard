@@ -3,3 +3,4 @@
 /services/users/.byebug_history
 /gateway/node_modules/
 /gateway/dist/*
+.vscode/*

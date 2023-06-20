@@ -68,3 +68,6 @@ gem "faker", "~> 3.2"
 
 gem "rails_event_store"
 
+group :test do
+  gem "ruby_event_store-rspec"
+end
