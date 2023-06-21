@@ -84,6 +84,10 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     dartsass (1.49.8)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -239,6 +243,9 @@ GEM
     rspec-expectations (3.12.3)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
+    rspec-graphql_response (0.5.0)
+      graphql (>= 1.0)
+      rspec (>= 3.0)
     rspec-mocks (3.12.5)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
@@ -293,6 +300,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.13)
   bootsnap
   byebug (~> 11.1)
+  database_cleaner-active_record
   debug
   factory_bot_rails
   faker (~> 3.2)
@@ -307,6 +315,7 @@ DEPENDENCIES
   rails_event_store
   redis-rack-cache (~> 2.2)
   redis-rails (~> 5.0)
+  rspec-graphql_response (~> 0.5.0)
   rspec-rails
   ruby_event_store-rspec
   search_object_graphql
