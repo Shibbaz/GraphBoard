@@ -4,3 +4,4 @@
 /gateway/node_modules/
 /gateway/dist/*
 .vscode/*
+gateway/package-lock.json
