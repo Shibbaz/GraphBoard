@@ -5,7 +5,6 @@ class CreateVideos < ActiveRecord::Migration[7.0]
       t.text :description
       t.text :type
       t.uuid :author
-      t.uuid :subscribers, array: true, default: []
       t.jsonb :rules, array: true, default: []
       t.timestamps
     end

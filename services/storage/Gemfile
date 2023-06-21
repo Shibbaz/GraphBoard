@@ -19,3 +19,14 @@ gem "graphql", "~> 2.0"
 gem "apollo-federation", "~> 3.8"
 
 gem "graphql-rails-generators", "~> 1.1"
+
+gem "apollo_upload_server", "~> 2.1"
+
+gem "aws-sdk", "~> 3.1"
+
+gem "acidic_job", "~> 0.8.7"
+
+gem "sidekiq", "~> 7.1"
+
+gem "rails_event_store", "~> 2.9"
+gem "search_object_graphql"
