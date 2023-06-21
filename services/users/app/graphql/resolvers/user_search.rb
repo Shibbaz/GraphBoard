@@ -4,7 +4,8 @@ module Resolvers
     type [Types::UserType], null: false
     description "Lists users"
 
-    scope { 
+    scope {
+      Authenticate.call(context: context)
       User.all.load_async
     }
   
@@ -19,24 +20,6 @@ module Resolvers
         scope.where surname: value 
       }
     }
-
-    option(:phone, type: Int)   { 
-      |scope, value| cache_fragment(context: context, expires_in: 5.minutes) { 
-        scope.where phone: value 
-      }
-    }
-
-    option(:email, type: String)   { 
-      |scope, value| cache_fragment(context: context, expires_in: 5.minutes) { 
-        scope.where email: value 
-      }
-    }
-
-    option(:description, type: String)   { 
-      |scope, value| cache_fragment(context: context, expires_in: 5.minutes) { 
-        scope.where description: value 
-      }
-    }
     
     option(:technologies, type: [String]) { 
         |scope, value| cache_fragment(context: context, expires_in: 5.minutes) { 
@@ -44,11 +27,6 @@ module Resolvers
             |h| value.include? h["name"]
           }
         }
-      }
-    }
-    option(:birthday, type: GraphQL::Types::ISO8601DateTime)   {
-      |scope, value| cache_fragment(context: context, expires_in: 5.minutes) { 
-        scope.where birthday: value 
       }
     }
   
