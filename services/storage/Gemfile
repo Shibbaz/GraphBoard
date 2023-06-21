@@ -17,3 +17,5 @@ end
 
 gem "graphql", "~> 2.0"
 gem "apollo-federation", "~> 3.8"
+
+gem "graphql-rails-generators", "~> 1.1"
