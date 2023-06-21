@@ -50,7 +50,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    return if request.env["HTTP_AUTHORIZATION"] == "undefined"
+    return if request.env["HTTP_AUTHORIZATION"] == "undefined" || request.env["HTTP_AUTHORIZATION"].nil?
     crypt = ActiveSupport::MessageEncryptor.new(Rails.application.credentials.secret_key_base.byteslice(0..31))
     token = crypt.decrypt_and_verify request.env["HTTP_AUTHORIZATION"]
     user_id = token.gsub('user-id:', '')
