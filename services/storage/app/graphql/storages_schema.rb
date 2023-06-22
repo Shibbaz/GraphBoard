@@ -2,7 +2,7 @@ class StoragesSchema < GraphQL::Schema
   include ApolloFederation::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
-  federation version: '3.8'
+  federation version: "3.8"
 
   orphan_types Types::VideoType
 
@@ -19,7 +19,6 @@ class StoragesSchema < GraphQL::Schema
   end
 
   validate_max_errors(100)
-
 
   def self.id_from_object(object, type_definition, query_ctx)
     object.to_gid_param

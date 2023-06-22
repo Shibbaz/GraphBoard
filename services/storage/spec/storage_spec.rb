@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'faker'
+require "rails_helper"
+require "faker"
 
 RSpec.describe Storage::Upload, type: :model do
   subject(:context) do
     Storage::Upload
   end
-  context 'upload method' do
+  context "upload method" do
     let(:fake_s3) { {} }
 
     let(:client) do
@@ -16,7 +16,7 @@ RSpec.describe Storage::Upload, type: :model do
         :create_bucket, lambda { |context|
           name = context.params[:bucket]
           if fake_s3[name]
-            'BucketAlreadyExists' # standalone strings are treated as exceptions
+            "BucketAlreadyExists" # standalone strings are treated as exceptions
           else
             fake_s3[name] = {}
             {}
@@ -26,11 +26,11 @@ RSpec.describe Storage::Upload, type: :model do
       client
     end
 
-    it 'expects successfully uploading file' do
-      bucket_key = 'foo'
+    it "expects successfully uploading file" do
+      bucket_key = "foo"
       client.create_bucket(bucket: bucket_key)
-      file_key = 'obj'
-      file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'luffy.mov'), 'video/mp4')
+      file_key = "obj"
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "luffy.mov"), "video/mp4")
       expect do
         Storage::Upload.call(
           storage: client,
@@ -41,11 +41,11 @@ RSpec.describe Storage::Upload, type: :model do
       end.to_not raise_error
     end
 
-    it 'expects uploading file failure' do
-      bucket_key = 'foo'
+    it "expects uploading file failure" do
+      bucket_key = "foo"
       client.create_bucket(bucket: bucket_key)
-      file_key = 'obj'
-      file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'luffy.jpg'), 'image/jpg')
+      file_key = "obj"
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "luffy.jpg"), "image/jpg")
       expect do
         Storage::Upload.call(
           storage: client,

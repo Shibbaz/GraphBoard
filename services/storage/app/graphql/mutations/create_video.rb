@@ -9,7 +9,7 @@ module Mutations
         args: input,
         file: file
       )
-      { status: 200}
+      {status: 200}
     rescue => e
       raise GraphQL::ExecutionError.new(e.message)
     end

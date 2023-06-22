@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 credentials = Rails.application.credentials
 Storage::Build.call(
   endpoint: credentials[:S3_Endpoint],

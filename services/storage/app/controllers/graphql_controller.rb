@@ -14,7 +14,6 @@ class GraphqlController < ApplicationController
       tracing_enabled: ApolloFederation::Tracing.should_add_traces(request.headers)
 
     }
-    byebug
     result = StoragesSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e

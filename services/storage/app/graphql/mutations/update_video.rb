@@ -5,11 +5,11 @@ module Mutations
 
     argument :video_id, ID, required: true
     argument :input, Types::Input::VideoInput, required: true
-    
+
     def resolve(video_id:, input:)
       Authenticate.call(context: context)
       Concepts::Videos::Repository.new.update(video_id: video_id, args: input)
-      { status: 200 }
+      {status: 200}
     rescue => e
       raise GraphQL::ExecutionError.new(e.message)
     end

@@ -6,7 +6,7 @@ module Mutations
     def resolve(video_id:)
       Authenticate.call(context: context)
       Concepts::Videos::Repository.new.delete(video_id: video_id)
-      { status: 200 }
+      {status: 200}
     rescue => e
       GraphQL::ExecutionError.new(e.message)
     end
