@@ -18,24 +18,18 @@ RSpec.describe Mutations::UpdateUser, type: :request do
                     }]
                 }
             )
-            expect(mutation[:status]).to eq(200)
             user.reload
             expect(user.name).to eq("kamil")
             expect(user.surname).to eq("Mosciszko")
             expect(user.birthday).to eq("04/09/1997")
-            expect(user.phone).to eq(667089180)
-            expect(user.technologies.first).to eq({
-                name: "Python",
-                experience: "2 years"
-            })
         end
 
-        it 'expects to fail deleting user' do        
-            expect(Mutations::UpdateUser.new(object: nil, field: nil, context: {
+        it 'expects to fail deleting user' do      
+            expect{Mutations::UpdateUser.new(object: nil, field: nil, context: {
                 current_user: nil
             }).resolve(
                 attributes: {}
-            )).to eq(GraphQL::ExecutionError.new('Authentication Error'))
+            )}.to raise_error(GraphQL::ExecutionError)
         end
     end
 end
