@@ -7,14 +7,16 @@ module Concepts
                 @adapter = adapter
             end
 
-            def create(args:)
+            def create(args:, file:)
+                raise FileInvalidTypeError if File.extname(file.path) != '.mov'
                 ActiveRecord::Base.transaction do
                     id = SecureRandom.uuid
                     Rails.configuration.event_store.publish(
                       VideoWasCreated.new(data:{
                         id: id,
                         args: args.to_h,
-                        adapter: adapter
+                        file: file,
+                        adapter: @adapter
                       }),
                       stream_name: "Video-#{id}"
                     )
@@ -25,11 +27,11 @@ module Concepts
                 ActiveRecord::Base.transaction do
                     Rails.configuration.event_store.publish(
                       VideoWasUpdated.new(data:{
-                        adapter: adapter,
+                        adapter: @adapter,
                         video_id: video_id,
                         args: args.to_h
                       }),
-                      stream_name: "Video-#{current_user.id}"
+                      stream_name: "Video-#{SecureRandom.uuid}"
                     )
                 end
             end
@@ -39,9 +41,9 @@ module Concepts
                     Rails.configuration.event_store.publish(
                       VideoWasDeleted.new(data:{
                         video_id: video_id,
-                        adapter: adapter
+                        adapter: @adapter
                       }),
-                      stream_name: "Video-#{current_user.id}"
+                      stream_name: "Video-#{SecureRandom.uuid}"
                     )
                 end
             end

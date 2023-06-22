@@ -1,8 +1,7 @@
 module Storage
     class Upload
         def self.call(bucket:, key:, file:, storage: Rails.configuration.s3)
-          raise Storage::FileInvalidTypeError if File.extname(file.path) != '.mov'
-  
+          raise FileInvalidTypeError if File.extname(file.path) != '.mov'
           config = {
             key:,
             bucket:

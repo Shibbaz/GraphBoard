@@ -3,7 +3,7 @@ class CreateVideos < ActiveRecord::Migration[7.0]
     create_table :videos, id: :uuid do |t|
       t.text :name
       t.text :description
-      t.text :type
+      t.text :video_type
       t.uuid :author
       t.jsonb :rules, array: true, default: []
       t.timestamps

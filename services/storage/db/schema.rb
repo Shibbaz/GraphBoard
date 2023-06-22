@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_22_001418) do
   create_table "videos", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "name"
     t.text "description"
-    t.text "type"
+    t.text "video_type"
     t.uuid "author"
     t.jsonb "rules", default: [], array: true
     t.datetime "created_at", null: false

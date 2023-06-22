@@ -4,13 +4,14 @@ module Concepts
             class Create < ActiveJob::Base
                 def call(event)
                     args = event.data.fetch(:args)
+                    file = event.data.fetch(:file)
                     adapter = event.data.fetch(:adapter)
                     video = adapter.create!(args)
-                    Services::Storage::Upload.call(
+                    Storage::Upload.call(
                         storage: Rails.configuration.s3,
-                        bucket: ENV['S3_BUCKET'],
-                        key: file_key,
-                        file: args[:file]
+                        bucket: Rails.application.credentials.config[:S3_BUCKET],
+                        key: video.id,
+                        file: file
                     )
                 end
             end

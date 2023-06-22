@@ -4,5 +4,5 @@ class Video < ApplicationRecord
   validates :rules, presence: true
   validates :id, presence: true
   validates :description, presence: true
-  validates :type, presence: true
+  validates :video_type, presence: true
 end
