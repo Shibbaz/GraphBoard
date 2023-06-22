@@ -21,7 +21,7 @@ This project is gonna  consist of 4 services
 ## Thoughts
 Currently Gateway through typescript && nodejs, but eventually We desire performance, so maybe Rust?
 Lets have a look at that language later. It's good because services can be developed in other frameworks and even languages.
-The only requirement is to have graphql server library in that gem that supports graphql federation feature. So Rust, Go, Ruby, javascript.
+The only requirement is to have graphql server library in that language that supports graphql federation feature. So Rust, Go, Ruby, javascript.
 There is idea that to seperate streaming videos outside the router and create next to router for this kind of thing. 
 
 ## Draft of architecture.
