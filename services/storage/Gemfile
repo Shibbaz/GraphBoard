@@ -13,6 +13,9 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "byebug"
   gem "standard"
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem "faker", "~> 3.2"
 end
 
 gem "graphql", "~> 2.0"
