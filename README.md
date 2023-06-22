@@ -13,7 +13,7 @@ To clients, this looks exactly the same as querying any other GraphQL server—n
 
 ## Introduction into Project
 This project is gonna  consist of 4 services
-= [x] Authentication (services/users) -> authenticate user
+- [x] Authentication (services/users) -> authenticate user
 - [] Upload (services/storage) -> to Minio -> upload content
 - [] Job Offers (services/recruitment) -> apply to job offer
 - [] Video streaming - > streaming video files that were uploaded throguh services/storage
