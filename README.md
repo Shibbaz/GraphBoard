@@ -1,4 +1,4 @@
-# Graphs-Demo
+# GraphBoard
 
 ## Introduction To Apollo Federation concept
 Apollo Federation is a powerful, open architecture for creating a supergraph that combines multiple GraphQL APIs. 
