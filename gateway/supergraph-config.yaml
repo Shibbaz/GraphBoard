@@ -1,10 +1,10 @@
 subgraphs:
-  storages:
-    routing_url: http://localhost:3000/graphql
-    schema:
-      subgraph_url: http://localhost:3000/graphql
   users:
     routing_url: http://localhost:3001/graphql
     schema:
       subgraph_url: http://localhost:3001/graphql
+  storages:
+    routing_url: http://localhost:3000/graphql
+    schema:
+      subgraph_url: http://localhost:3000/graphql
 

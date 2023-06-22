@@ -12,7 +12,7 @@ var gateway = new ApolloGateway({
             url: url,
             willSendRequest: function (_a) {
                 var request = _a.request, context = _a.context;
-                request.http.headers.set("Authorization", context.authorizationHeader);
+                request.http.headers.set("Authorization", " " + context.authorizationHeader);
             }
         });
     }
