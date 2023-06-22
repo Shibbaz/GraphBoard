@@ -1,6 +1,5 @@
 module Types
     class VideoType < Types::BaseObject
-        extend_type
         field :id, ID, null: false
         field :name, String, null: true
         field :description, String, null: true

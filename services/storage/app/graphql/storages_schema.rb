@@ -1,10 +1,10 @@
-class StorageSchema < GraphQL::Schema
+class StoragesSchema < GraphQL::Schema
+  include ApolloFederation::Schema
   mutation(Types::MutationType)
   query(Types::QueryType)
-  include ApolloFederation::Schema
   federation version: '3.8'
 
-  orphan_types Types::UserType
+  orphan_types Types::VideoType
 
   use ApolloFederation::Tracing
 
