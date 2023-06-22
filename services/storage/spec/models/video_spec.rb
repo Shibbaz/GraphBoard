@@ -22,9 +22,9 @@ RSpec.describe Video, type: :model do
     end
 
     it 'expects to fail when type is not present' do
-      expect{create(:video, type: nil)}.to raise_error(
+      expect{create(:video, video_type: nil)}.to raise_error(
         ActiveRecord::RecordInvalid,
-        "Validation failed: Type can't be blank"
+        "Validation failed: Video type can't be blank"
       )
     end
 
