@@ -6,7 +6,8 @@ module Concepts
           args = event.data.fetch(:args)
           file = event.data.fetch(:file)
           adapter = event.data.fetch(:adapter)
-          video = adapter.create!(args)
+          id = event.data.fetch(:id)
+          video = adapter.create!(args.merge(id: id))
           Storage::Upload.call(
             storage: Rails.configuration.s3,
             bucket: Rails.application.credentials.config[:S3_BUCKET],

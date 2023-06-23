@@ -8,6 +8,8 @@ module Concepts
       end
 
       def create(args:, file:)
+        raise ArgumentError if args == nil || args =={}
+        raise FileInvalidTypeError if  file == nil
         raise FileInvalidTypeError if File.extname(file.path) != ".mov"
         ActiveRecord::Base.transaction do
           id = SecureRandom.uuid
