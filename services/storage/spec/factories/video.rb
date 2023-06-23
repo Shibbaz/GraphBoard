@@ -6,5 +6,6 @@ FactoryBot.define do
     video_type { "video" }
     author { SecureRandom.uuid }
     rules { [{age: 12}] }
+    created_at { Faker::Date.birthday(min_age: 18, max_age: 65) }
   end
 end

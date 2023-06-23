@@ -3,12 +3,20 @@ module Resolvers
     type [Types::VideoType], null: false
     description "Lists videos"
 
-    scope { Video.all }
+    scope {
+      Authenticate.call(context: context)
+      Video.all.reload
+    }
     option(:name, type: String) { |scope, value| scope.where name: value }
-    option(:description, type: String) { |scope, value| scope.where description: value }
-    option(:type, type: String) { |scope, value| scope.where type: value }
-    option(:rules, type: GraphQL::Types::JSON) { |scope, value| scope.where rules: value }
-    option(:created_at, type: GraphQL::Types::ISO8601DateTime) { |scope, value| scope.where created_at: value }
+    option(:video_type, type: String) { |scope, value| scope.where video_type: value }
+    option(:created_at, type: GraphQL::Types::Boolean) { |scope, value|
+      column = Video.arel_table[:created_at]
+      if value == false
+        scope.order(column.desc)
+      else
+        scope.order(column.asc)
+      end
+    }
 
     def resolve
       []

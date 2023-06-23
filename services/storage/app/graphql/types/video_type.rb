@@ -5,6 +5,7 @@ module Types
     field :video_type, String, null: true
     field :rules, GraphQL::Types::JSON, null: true
     field :user, Types::UserType, null: true
+    field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def self.resolve_reference(object, _context)
       Article.where(user_id: object[:id])
