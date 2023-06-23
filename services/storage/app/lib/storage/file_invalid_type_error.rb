@@ -1,4 +1,4 @@
-class FileInvalidTypeError < ActiveRecord::RecordNotFound
+class FileInvalidTypeError < StandardError
   def message
     "File is not found"
   end

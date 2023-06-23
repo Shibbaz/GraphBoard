@@ -7,6 +7,11 @@ module Concepts
           id = event.data.fetch(:video_id)
           video = adapter.find(id)
           video.destroy!
+          Storage::Delete.call(
+            storage: Rails.configuration.s3,
+            bucket: Rails.application.credentials.config[:S3_BUCKET],
+            key: id
+          )
         end
       end
     end
