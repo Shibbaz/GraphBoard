@@ -1602,6 +1602,10 @@ GEM
       connection_pool
     regexp_parser (2.8.1)
     rexml (3.2.5)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
     rspec-core (3.12.2)
       rspec-support (~> 3.12.0)
     rspec-expectations (3.12.3)
@@ -1650,6 +1654,8 @@ GEM
     ruby_event_store-browser (2.9.1)
       rack
       ruby_event_store (= 2.9.1)
+    ruby_event_store-rspec (2.9.1)
+      rspec (~> 3.0)
     search_object (1.2.5)
     search_object_graphql (1.0.4)
       graphql (> 1.8)
@@ -1705,6 +1711,7 @@ DEPENDENCIES
   rails (~> 7.0.5)
   rails_event_store (~> 2.9)
   rspec-rails
+  ruby_event_store-rspec
   search_object_graphql
   sidekiq (~> 7.1)
   standard
