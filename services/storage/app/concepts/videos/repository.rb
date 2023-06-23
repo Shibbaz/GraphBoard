@@ -33,7 +33,7 @@ module Concepts
               video_id: video_id,
               args: args.to_h
             }),
-            stream_name: "Video-#{SecureRandom.uuid}"
+            stream_name: "Video-#{video_id}"
           )
         end
       end
@@ -45,7 +45,7 @@ module Concepts
               video_id: video_id,
               adapter: @adapter
             }),
-            stream_name: "Video-#{SecureRandom.uuid}"
+            stream_name: "Video-#{video_id}"
           )
         end
       end
