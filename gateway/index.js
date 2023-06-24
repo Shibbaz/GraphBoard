@@ -91,7 +91,8 @@ var runServer = function () { return __awaiter(void 0, void 0, void 0, function 
                 server.applyMiddleware({ app: app, path: "/" });
                 return [2 /*return*/, new Promise(function (resolve) {
                         app.listen(4000, resolve);
-                    })]; // Specify the path where we'd like to mount our server
+                        console.log("🚀 Server is Successfully running on port 4000.");
+                    })];
         }
     });
 }); };

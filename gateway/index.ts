@@ -13,7 +13,7 @@ const express = require('express');
 
 const gateway = new ApolloGateway({
     supergraphSdl,
-    buildService: ({ url }) =>
+    buildService: ({ url }:any) =>
       new FileUploadDataSource({
         url,
         useChunkedTransfer: true
@@ -37,7 +37,7 @@ const runServer = async () => {
   const server = new ApolloServer({
     plugins,
     gateway,
-    context: ({ req }) => {
+    context: ({ req }:any) => {
       return {
         serverRequest: req,
         authorizationHeader: req.headers.authorization
@@ -50,7 +50,8 @@ const runServer = async () => {
 
   return new Promise((resolve) => {
     app.listen(4000, resolve);
-  });// Specify the path where we'd like to mount our server
+    console.log("🚀 Server is Successfully running on port 4000.")
+  });
 
   app.catch(console.error);
 
