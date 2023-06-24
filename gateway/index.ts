@@ -1,40 +1,37 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require("apollo-server-express");
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 const { readFileSync } = require('fs');
 const supergraphSdl = readFileSync('./supergraph.graphql').toString();
 const { ApolloLogPlugin } = require('apollo-log');
 const plugins = [ApolloLogPlugin];
-const {FileUploadDataSource} = require('@profusion/apollo-federation-upload');
+const FileUploadDataSource = require('@profusion/apollo-federation-upload').default;
 const { expressMiddleware } = require('@apollo/server/express4');
 const cors = require('cors');
+const {graphqlUploadExpress} = require('graphql-upload')
 import { json } from 'body-parser';
 const express = require('express');
 
 const gateway = new ApolloGateway({
     supergraphSdl,
+    buildService: ({ url }) =>
+      new FileUploadDataSource({
+        url,
+        useChunkedTransfer: true
+      }),
+  /**
     buildService({ url }) {
       return new RemoteGraphQLDataSource({
         url,
         willSendRequest({ request, context }) {
           request.http.headers.set("Authorization", " " + context.authorizationHeader);
-          request.http.headers.set('Access-Control-Allow-Credentials', 'true');
-          request.http.headers.set(
-            'Access-Control-Allow-Origin',
-            'https://studio.apollographql.com'
-          );
-          request.http.headers.set(
-            'Access-Control-Allow-Headers',
-            'Origin, X-Requested-With, Content-Type, Accept'
-          );
         }
       });
-    },
-    uploadService: ({ url }) => new FileUploadDataSource({ 
-      url, useChunkedTransfer: true }),
-      useChunkedTransfer: true,
+    }  
+  */    
 });
 
 const app = express();
+app.use(graphqlUploadExpress());
 
 const runServer = async () => {
   const server = new ApolloServer({
@@ -48,12 +45,15 @@ const runServer = async () => {
   },
 
   });
-  const { url } = await server.listen();
+  await server.start();
+  server.applyMiddleware({ app, path: "/" });
 
-// Specify the path where we'd like to mount our server
-  app.use('/graphql', cors(), json(), expressMiddleware(server))
+  return new Promise((resolve) => {
+    app.listen(4000, resolve);
+  });// Specify the path where we'd like to mount our server
 
-  console.log(`🚀  Server ready at ${url}`);
+  app.catch(console.error);
+
 };
 
 runServer().catch(error => {

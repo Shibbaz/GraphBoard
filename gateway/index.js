@@ -36,44 +36,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var ApolloServer = require('apollo-server').ApolloServer;
+var ApolloServer = require("apollo-server-express").ApolloServer;
 var _a = require('@apollo/gateway'), ApolloGateway = _a.ApolloGateway, RemoteGraphQLDataSource = _a.RemoteGraphQLDataSource;
 var readFileSync = require('fs').readFileSync;
 var supergraphSdl = readFileSync('./supergraph.graphql').toString();
 var ApolloLogPlugin = require('apollo-log').ApolloLogPlugin;
 var plugins = [ApolloLogPlugin];
-var FileUploadDataSource = require('@profusion/apollo-federation-upload').FileUploadDataSource;
+var FileUploadDataSource = require('@profusion/apollo-federation-upload').default;
 var expressMiddleware = require('@apollo/server/express4').expressMiddleware;
 var cors = require('cors');
-var body_parser_1 = require("body-parser");
+var graphqlUploadExpress = require('graphql-upload').graphqlUploadExpress;
 var express = require('express');
 var gateway = new ApolloGateway({
     supergraphSdl: supergraphSdl,
     buildService: function (_a) {
-        var url = _a.url;
-        return new RemoteGraphQLDataSource({
-            url: url,
-            willSendRequest: function (_a) {
-                var request = _a.request, context = _a.context;
-                request.http.headers.set("Authorization", " " + context.authorizationHeader);
-                request.http.headers.set('Access-Control-Allow-Credentials', 'true');
-                request.http.headers.set('Access-Control-Allow-Origin', 'https://studio.apollographql.com');
-                request.http.headers.set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-            }
-        });
-    },
-    uploadService: function (_a) {
         var url = _a.url;
         return new FileUploadDataSource({
             url: url,
             useChunkedTransfer: true
         });
     },
-    useChunkedTransfer: true,
+    /**
+      buildService({ url }) {
+        return new RemoteGraphQLDataSource({
+          url,
+          willSendRequest({ request, context }) {
+            request.http.headers.set("Authorization", " " + context.authorizationHeader);
+          }
+        });
+      }
+    */
 });
 var app = express();
+app.use(graphqlUploadExpress());
 var runServer = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var server, url;
+    var server;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -88,13 +85,13 @@ var runServer = function () { return __awaiter(void 0, void 0, void 0, function 
                         };
                     },
                 });
-                return [4 /*yield*/, server.listen()];
+                return [4 /*yield*/, server.start()];
             case 1:
-                url = (_a.sent()).url;
-                // Specify the path where we'd like to mount our server
-                app.use('/graphql', cors(), (0, body_parser_1.json)(), expressMiddleware(server));
-                console.log("\uD83D\uDE80  Server ready at ".concat(url));
-                return [2 /*return*/];
+                _a.sent();
+                server.applyMiddleware({ app: app, path: "/" });
+                return [2 /*return*/, new Promise(function (resolve) {
+                        app.listen(4000, resolve);
+                    })]; // Specify the path where we'd like to mount our server
         }
     });
 }); };
