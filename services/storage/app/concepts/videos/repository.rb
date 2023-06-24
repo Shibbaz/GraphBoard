@@ -17,7 +17,7 @@ module Concepts
             VideoWasCreated.new(data: {
               id: id,
               args: args.to_h,
-              file: file,
+              file: file.tempfile,
               adapter: @adapter
             }),
             stream_name: "Video-#{id}"

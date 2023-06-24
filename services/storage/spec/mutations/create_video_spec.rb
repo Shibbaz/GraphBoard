@@ -39,7 +39,7 @@ RSpec.describe Mutations::CreateVideo, type: :request do
         Mutations::CreateVideo.new(object: nil, field: nil, context: {
           current_user_id: SecureRandom.uuid
         }).resolve(
-          input: input,
+          informations: input,
           file: video
         )
       end.to_not raise_error
@@ -53,7 +53,7 @@ RSpec.describe Mutations::CreateVideo, type: :request do
         Mutations::CreateVideo.new(object: nil, field: nil, context: {
           current_user_id: SecureRandom.uuid
         }).resolve(
-          input: failed_input,
+          informations: failed_input,
           file: not_a_video
         )
       }.to raise_error(GraphQL::ExecutionError, "File is not found")
@@ -64,7 +64,7 @@ RSpec.describe Mutations::CreateVideo, type: :request do
         Mutations::CreateVideo.new(object: nil, field: nil, context: {
           current_user_id: nil
         }).resolve(
-          input: failed_input,
+          informations: failed_input,
           file: video
         )
       }.to raise_error(GraphQL::ExecutionError)

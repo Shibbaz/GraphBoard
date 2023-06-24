@@ -8,7 +8,7 @@ RSpec.describe Mutations::UpdateVideo, type: :request do
         current_user_id: SecureRandom.uuid
       }).resolve(
         video_id: video.id,
-        input: {
+        informations: {
           name: "Two Piece",
           description: quote,
           video_type: "video"
@@ -25,7 +25,7 @@ RSpec.describe Mutations::UpdateVideo, type: :request do
         Mutations::UpdateVideo.new(object: nil, field: nil, context: {
           current_user_id: nil
         }).resolve(
-          input: {
+          informations: {
             name: "One Piece",
             description: Faker::JapaneseMedia::OnePiece.quote,
             video_type: "video"

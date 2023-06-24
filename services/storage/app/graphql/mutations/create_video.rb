@@ -1,12 +1,12 @@
 module Mutations
   class CreateVideo < Mutations::BaseMutation
-    argument :input, Types::Input::VideoInput, required: true
-    argument :file, ApolloUploadServer::Upload, required: true
+    argument :informations, Types::Input::VideoInput, required: true
+    argument :file, ApolloUploadServer::Upload
     field :status, Integer, null: false
-    def resolve(input:, file:)
+    def resolve(informations:, file:)
       Authenticate.call(context: context)
       Concepts::Videos::Repository.new.create(
-        args: input,
+        args: informations,
         file: file
       )
       {status: 200}

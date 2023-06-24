@@ -10,5 +10,6 @@ module Storages
     config.api_only = true
     config.eager_load_paths += Dir[Rails.root.join("app/concepts/**/**/**.rb")].each { |rb| require rb }
     config.eager_load_paths += Dir[Rails.root.join("app/lib/**/**.rb")].each { |rb| require rb }
+    ApolloUploadServer::Middleware.strict_mode = true
   end
 end
