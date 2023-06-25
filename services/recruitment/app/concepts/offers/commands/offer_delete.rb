@@ -3,7 +3,7 @@ module Concepts
         module Commands
             class OfferDelete < ActiveJob::Base
                 def call(event)
-                    offer = event.fetch(:offer)
+                    offer = event.data.fetch(:offer)
                     offer.destroy!
                 end
             end

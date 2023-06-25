@@ -7,15 +7,17 @@ module Concepts
                 @adapter = adapter
             end
 
-            def create(informations:, auth_provider:)
+            def create(informations:)
                 ActiveRecord::Base.transaction do
                     id = SecureRandom.uuid
                     Rails.configuration.event_store.publish(
-                      OfferWasCreated.new(data:{
-                        id: id,
-                        adapter: @adapter,
-                        informations: informations.to_h,
-                      }),
+                      OfferWasCreated.new(
+                        data: {
+                          id: id,
+                          adapter: @adapter,
+                          informations: informations.to_h,
+                        }
+                      ),
                       stream_name: "Offer-#{id}"
                     )
                 end
