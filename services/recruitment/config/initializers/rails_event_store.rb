@@ -13,3 +13,4 @@ Rails.configuration.event_store.subscribe(Concepts::Offers::Commands::OfferUpdat
 Rails.configuration.event_store.subscribe(Concepts::Tags::Commands::TagCreate.new, to: [TagWasCreated])
 Rails.configuration.event_store.subscribe(Concepts::Tags::Commands::TagDelete.new, to: [TagWasDeleted])
 Rails.configuration.event_store.subscribe(Concepts::Tags::Commands::TagUpdate.new, to: [TagWasUpdated])
+Rails.configuration.event_store.subscribe(Concepts::Offers::Commands::ApplyOnJobOffer.new, to: [AppliedOnJobOffer])
