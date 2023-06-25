@@ -3,9 +3,12 @@ module Concepts
         module Commands
             class OfferCreate < ActiveJob::Base
                 def call(event)
-                    id = event.data.fetch(:id)
+                    byebug
+                    id = event.data.fetch(:offer_id)
                     adapter = event.data.fetch(:adapter)
+                    current_user_id = event.data.fetch(:current_user_id)
                     informations = event.data.fetch(:informations)
+                    args = informations.merge({id: offer_id, author: current_user_id})
                     adapter.create(args)
                 end
             end

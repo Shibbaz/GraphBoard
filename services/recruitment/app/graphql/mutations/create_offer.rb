@@ -6,6 +6,7 @@ module Mutations
     def resolve(informations: nil)
       Concepts::Offers::Repository.new.create(
         informations: informations,
+        current_user_id: context[:current_user_id]
       )
       { status: 200}
     rescue => e

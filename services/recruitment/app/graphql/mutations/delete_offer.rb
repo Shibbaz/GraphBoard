@@ -6,7 +6,7 @@ module Mutations
     def resolve(offer_id: nil)
       Authenticate.call(context: context)
       Concepts::Offers::Repository.new.delete(
-        current_user: context[:current_user],
+        current_user_id: context[:current_user_id],
         offer_id: offer_id
       )
       { status: 200 }
