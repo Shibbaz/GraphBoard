@@ -5,7 +5,7 @@ class CreateOffers < ActiveRecord::Migration[7.0]
       t.text :description
       t.json :requirements, array: true
       t.uuid :tags, array: true
-      t.text :author
+      t.uuid :author
       t.json :contact_details
 
       t.timestamps
