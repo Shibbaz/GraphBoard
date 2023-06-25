@@ -1,6 +1,6 @@
 class Offer < ApplicationRecord
     validates :name, presence: true, length: { minimum: 8 }
-    validates :name, presence: true, length: { minimum: 150 }
+    validates :description, presence: true, length: { minimum: 150 }
     validates :requirements, presence: true, length: {
         minimum: 1, message: 'should have at least 1 requirement defined.'
     }
