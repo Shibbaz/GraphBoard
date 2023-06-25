@@ -8,19 +8,18 @@ module Concepts
             end
 
             def create(informations:, current_user_id:)
-              offer_id = SecureRandom.uuid
-
+              raise ArgumentError.new "Please, pass params. Params not found" if informations.nil? || current_user_id.nil?
               ActiveRecord::Base.transaction do
                 Rails.configuration.event_store.publish(
                   OfferWasCreated.new(
                     data: {
                       current_user_id: current_user_id,
-                      offer_id: offer_id,
+                      offer_id: SecureRandom.uuid,
                       adapter: @adapter,
-                      informations: informations.to_h,
+                      informations: informations.to_h
                     }
                   ),
-                  stream_name: "Offer-#{id}"
+                  stream_name: "Offer-#{SecureRandom.uuid}"
                 )
               end
             end
