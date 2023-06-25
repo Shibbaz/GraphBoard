@@ -9,7 +9,7 @@ module Types
     field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
     def self.resolve_reference(object, _context)
-      Article.where(user_id: object[:id])
+      Video.where(author: object[:author])
     end
 
     def user
