@@ -5,7 +5,7 @@ module Mutations
 
     def resolve(offer_id: nil)
       Authenticate.call(context: context)
-      Concepts::Offers::Repository.new.applyOnJobOffer(
+      Concepts::Offers::Repository.new.apply_on_job_offer(
         current_user_id: context[:current_user_id],
         offer_id: offer_id
       )
