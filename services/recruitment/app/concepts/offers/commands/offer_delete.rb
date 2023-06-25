@@ -1,5 +1,5 @@
 module Concepts
-    module Users
+    module Offers
         module Commands
             class OfferDelete < ActiveJob::Base
                 def call(event)

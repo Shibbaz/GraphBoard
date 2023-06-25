@@ -1,5 +1,5 @@
 module Concepts
-    module Users
+    module Offers
         module Commands
             class OfferCreate < ActiveJob::Base
                 def call(event)

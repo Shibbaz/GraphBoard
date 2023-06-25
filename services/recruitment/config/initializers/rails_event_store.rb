@@ -7,6 +7,6 @@ Rails.configuration.event_store = RailsEventStore::Client.new(
       RubyEventStore::Dispatcher.new,
     ),
 )
-Rails.configuration.event_store.subscribe(Concepts::Users::Commands::UserCreate.new, to: [OfferWasCreated])
-Rails.configuration.event_store.subscribe(Concepts::Users::Commands::UserDelete.new, to: [OfferWasDeleted])
-Rails.configuration.event_store.subscribe(Concepts::Users::Commands::UserUpdate.new, to: [OfferWasUpdated])
+Rails.configuration.event_store.subscribe(Concepts::Offers::Commands::OfferCreate.new, to: [OfferWasCreated])
+Rails.configuration.event_store.subscribe(Concepts::Offers::Commands::OfferDelete.new, to: [OfferWasDeleted])
+Rails.configuration.event_store.subscribe(Concepts::Offers::Commands::OfferUpdate.new, to: [OfferWasUpdated])
