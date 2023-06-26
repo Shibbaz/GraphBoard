@@ -1,6 +1,6 @@
 module Types
   module Input
-    class UpdateVideoInput < Types::BaseInputObject
+    class VideoInput < Types::BaseInputObject
       argument :name, String, required: false
       argument :description, String, required: false
       argument :video_type, String, required: false
