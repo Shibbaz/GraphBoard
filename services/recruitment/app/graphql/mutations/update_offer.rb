@@ -2,7 +2,7 @@ module Mutations
   class UpdateOffer < Mutations::BaseMutation
     field :status, Integer, null: false
 
-    argument :informations, Types::Input::UpdateOfferInput, required: true
+    argument :informations, Types::Input::OfferInput, required: true
     argument :offer_id, ID, required: true
 
     def resolve(informations:, offer_id:)

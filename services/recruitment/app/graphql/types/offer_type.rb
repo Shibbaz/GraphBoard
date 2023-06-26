@@ -4,7 +4,7 @@ module Types
     field :description, String, null: true
     field :requirements, [GraphQL::Types::JSON], null: true
     field :tags, [ID], null: true
-    field :author, [Types::UserType], null: true
+    field :author, Types::UserType, null: true
     field :candidates, [Types::UserType], null: true
 
     field :contact_details, [GraphQL::Types::JSON], null: true

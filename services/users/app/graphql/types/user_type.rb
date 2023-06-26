@@ -1,5 +1,8 @@
 module Types
   class UserType < Types::BaseObject
+    key fields: 'id'
+    field :id, ID, null: false
+
     field :name, String, null: true
     field :surname, String, null: true
     field :phone, Int, null: true
@@ -8,6 +11,12 @@ module Types
     field :technologies, GraphQL::Types::JSON, null: true
     field :birthday, String, null: true
 
+    def self.resolve_reference(object, _context)
+      cache_fragment(context: context, expires_in: 25.minutes) { 
+        RecordLoader.for(User).load(object[:id]) 
+      }
+    end
+    
     def name
       cache_fragment(context: context, expires_in: 25.minutes) { object.name }
     end
