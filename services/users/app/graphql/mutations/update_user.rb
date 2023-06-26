@@ -1,7 +1,6 @@
 module Mutations
   class UpdateUser < Mutations::BaseMutation
     field :status, Integer, null: false
-
     argument :attributes, Types::Input::UserInput, required: true
     
     def resolve(attributes:)
