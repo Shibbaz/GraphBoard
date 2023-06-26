@@ -7,7 +7,7 @@ module Types
     field :author, Types::UserType, null: true
     field :candidates, [Types::UserType], null: true
 
-    field :contact_details, [GraphQL::Types::JSON], null: true
+    field :contact_details, GraphQL::Types::JSON, null: true
 
     def self.resolve_reference(object, _context)
       Offer.where(author: object[:author])

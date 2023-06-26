@@ -15,7 +15,7 @@ module Resolvers
       }
     }
 
-    option(:tags, type: String) { |scope, value|
+    option(:tags, type: [ID]) { |scope, value|
       cache_fragment(context: context, expires_in: 5.minutes) {
         scope.where tags: value
       }
