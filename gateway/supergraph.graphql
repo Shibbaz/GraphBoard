@@ -133,7 +133,7 @@ type PageInfo {
 
 type Query {
   """Lists users"""
-  users(name: String, surname: String, technologies: [String!]): [User!]! @join__field(graph: USERS)
+  users(birthday: ISO8601DateTime, description: String, email: String, name: String, phone: Int, surname: String, technologies: [String!]): [User!]! @join__field(graph: USERS)
 
   """Lists videos"""
   videos(createdAt: Boolean, name: String, videoType: String): [Video!]! @join__field(graph: STORAGES)

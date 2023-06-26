@@ -1,13 +1,13 @@
 module Types
   module Input
     class UserInput < Types::BaseInputObject
-      argument :name, String, required: false
-      argument :surname, String, required: false
-      argument :phone, Int, required: false
-      argument :email, String, required: false
-      argument :description, String, required: false
-      argument :technologies, [GraphQL::Types::JSON], required: false
-      argument :birthday, String, required: false
+      argument :name, String, required: true
+      argument :surname, String, required: true
+      argument :phone, Int, required: true
+      argument :email, String, required: true
+      argument :description, String, required: true
+      argument :technologies, [GraphQL::Types::JSON], required: true
+      argument :birthday, String, required: true
     end
   end
 end

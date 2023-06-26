@@ -22,14 +22,15 @@ RSpec.describe Mutations::UpdateUser, type: :request do
             expect(user.name).to eq("kamil")
             expect(user.surname).to eq("Mosciszko")
             expect(user.birthday).to eq("04/09/1997")
+            expect(user.phone).to eq(667089180)
         end
 
-        it 'expects to fail deleting user' do      
+        it 'expects to fail deleting user' do        
             expect{Mutations::UpdateUser.new(object: nil, field: nil, context: {
                 current_user: nil
             }).resolve(
                 attributes: {}
-            )}.to raise_error(GraphQL::ExecutionError)
+            )}.to raise_error(GraphQL::ExecutionError,'Authentication Error')
         end
     end
 end

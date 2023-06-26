@@ -6,8 +6,9 @@ module Concepts
                 def call(event)
                     informations = event.data.fetch(:informations)
                     auth_provider = event.data.fetch(:auth_provider)
+                    adapter = event.data.fetch(:adapter)
                     id = event.data.fetch(:id)
-                    User.create!(
+                    adapter.create!(
                         id: id,
                         name: informations[:name],
                         surname: informations[:surname],
