@@ -29,7 +29,7 @@ module Concepts
         raise ActiveRecord::RecordNotFound unless offer
         ActiveRecord::Base.transaction do
           Rails.configuration.event_store.publish(
-            OfferWasUpdated.new(data:{
+            OfferWasUpdated.new(data: {
               offer: offer,
               informations: informations.to_h
             }),
@@ -43,12 +43,11 @@ module Concepts
         raise ActiveRecord::RecordNotFound unless offer
         ActiveRecord::Base.transaction do
           Rails.configuration.event_store.publish(
-            OfferWasDeleted.new(data:{
+            OfferWasDeleted.new(data: {
               offer: offer
-            }
-          ),
-          stream_name: "Offer-#{offer_id}"
-        )
+            }),
+            stream_name: "Offer-#{offer_id}"
+          )
         end
       end
 
@@ -70,5 +69,3 @@ module Concepts
     end
   end
 end
-
-

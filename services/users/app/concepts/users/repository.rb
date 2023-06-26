@@ -13,6 +13,7 @@ module Concepts
                     Rails.configuration.event_store.publish(
                       UserWasCreated.new(data:{
                         id: id,
+                        adapter: @adapter,
                         informations: informations.to_h,
                         auth_provider: auth_provider.to_h
                       }),

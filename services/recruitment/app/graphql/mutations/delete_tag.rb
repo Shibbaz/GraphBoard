@@ -5,10 +5,10 @@ module Mutations
 
     def resolve(tag_id: nil)
       Authenticate.call(context: context)
-      Concepts::Offers::Repository.new.delete(
+      Concepts::Tags::Repository.new.delete(
         tag_id: tag_id
       )
-      { status: 200 }
+      {status: 200}
     rescue => e
       GraphQL::ExecutionError.new(e.message)
     end

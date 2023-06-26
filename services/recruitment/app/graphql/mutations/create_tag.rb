@@ -1,13 +1,14 @@
 module Mutations
   class CreateTag < Mutations::BaseMutation
     argument :informations, Types::Input::TagInput, required: true
-  
+
     field :status, Integer, null: false
     def resolve(informations: nil)
+      Authenticate.call(context: context)
       Concepts::Tags::Repository.new.create(
-        informations: informations,
+        informations: informations
       )
-      { status: 200}
+      {status: 200}
     rescue => e
       raise GraphQL::ExecutionError.new(e.message)
     end

@@ -8,11 +8,11 @@ gem "rails", "~> 7.0.5"
 
 gem "pg", "~> 1.5"
 gem "puma", "~> 5.0"
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 gem "bootsnap", require: false
 group :development, :test do
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
 end
 
 gem "graphql", "~> 2.0"
@@ -29,11 +29,11 @@ gem "graphql-batch", "~> 0.5.3"
 
 gem "search_object_graphql"
 
-gem 'bcrypt', '~> 3.1.13'
+gem "bcrypt", "~> 3.1.13"
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 gem "faker", "~> 3.2"
@@ -43,10 +43,9 @@ gem "rails_event_store"
 group :test do
   gem "ruby_event_store-rspec"
 end
-gem 'graphql-fragment_cache'
+gem "graphql-fragment_cache"
 gem "redis-rails", "~> 5.0"
 
 gem "redis-rack-cache", "~> 2.2"
 
 gem "rspec-graphql_response", "~> 0.5.0"
-

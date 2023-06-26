@@ -9,7 +9,7 @@ module Mutations
         current_user_id: context[:current_user_id],
         offer_id: offer_id
       )
-      { status: 200 }
+      {status: 200}
     rescue => e
       GraphQL::ExecutionError.new(e.message)
     end

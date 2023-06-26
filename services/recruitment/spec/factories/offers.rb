@@ -2,20 +2,21 @@ FactoryBot.define do
   factory :offer do
     name { "Ruby Developer" }
     description { "This is offer for Ruby developer MID level" }
-    requirements { [
-      details: {
-        technology: Faker::ProgrammingLanguage.name,
-        experience: 10,
-        seniority: "MID",
-     },
-      work_environment: {
-        remote: true,
-        office: true,
-        hybrid: true
-      }
-    ]
+    requirements {
+      [
+        details: {
+          technology: Faker::ProgrammingLanguage.name,
+          experience: 10,
+          seniority: "MID"
+        },
+        work_environment: {
+          remote: true,
+          office: true,
+          hybrid: true
+        }
+      ]
     }
-    tags { 
+    tags {
       tag = create(:technology_tag)
       [tag.id]
     }
@@ -28,7 +29,7 @@ FactoryBot.define do
         email: Faker::Internet.email
       }
     }
-    candidates{
+    candidates {
       []
     }
   end
