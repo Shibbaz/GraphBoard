@@ -1,5 +1,7 @@
 class RecruitmentsSchema < GraphQL::Schema
   include ApolloFederation::Schema
+  use GraphQL::FragmentCache
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 

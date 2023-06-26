@@ -10,7 +10,9 @@ module Types
     field :contact_details, GraphQL::Types::JSON, null: true
 
     def self.resolve_reference(object, _context)
-      Offer.where(author: object[:author])
+      cache_fragment(context: context, expires_in: 25.minutes) { 
+        RecordLoader.for(Offer).load(object[:id]) 
+      }
     end
 
     def author
@@ -20,9 +22,11 @@ module Types
     end
 
     def candidates
-      cache_fragment(context: context, expires_in: 25.minutes) {
-        {__typename: "User", id: object[:candidates]}
-      }
+      cnds = []
+      for candidate in object[:candidates] 
+        cnds = cnds << {__typename: "User", id: candidate}
+      end
+      cnds
     end
 
     def name
