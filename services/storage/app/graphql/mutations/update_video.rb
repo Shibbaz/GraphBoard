@@ -4,7 +4,7 @@ module Mutations
     field :status, Integer, null: false
 
     argument :video_id, ID, required: true
-    argument :informations, Types::Input::VideoInput, required: true
+    argument :informations, Types::Input::UpdateVideoInput, required: true
 
     def resolve(**args)
       Authenticate.call(context: context)
