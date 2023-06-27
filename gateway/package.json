@@ -1,15 +1,16 @@
 {
         "dependencies": {
-            "@apollo/gateway": "latest",
-            "@profusion/apollo-federation-upload": "^4.0.0",
-            "apollo-log": "^1.1.0",
-            "apollo-server": "latest",
-            "apollo-server-express": "^3.12.0",
-            "cors": "^2.8.5",
-            "express": "^4.18.2",
-            "graphql": "latest",
-            "graphql-request": "^6.1.0",
-            "json": "^11.0.0",
-            "make-fetch-happen": "^11.1.1"
+                "@apollo/gateway": "latest",
+                "@profusion/apollo-federation-upload": "^4.0.0",
+                "apollo-log": "^1.1.0",
+                "apollo-server": "latest",
+                "apollo-server-express": "^3.12.0",
+                "apollo-server-types": "^3.8.0",
+                "cors": "^2.8.5",
+                "express": "^4.18.2",
+                "graphql": "latest",
+                "graphql-request": "^6.1.0",
+                "json": "^11.0.0",
+                "make-fetch-happen": "^11.1.1"
         }
-    }
+}
