@@ -1,6 +1,6 @@
 const { GraphQLRequest } = require("apollo-server-express");
 const FileUploadDataSource = require('@profusion/apollo-federation-upload').default;
-
+import {PrintServiceDetails} from './lib';
 export class AuthenticationAndUploadDataSource extends FileUploadDataSource {
     constructor(options:any){
       super(options)
@@ -13,7 +13,7 @@ export class AuthenticationAndUploadDataSource extends FileUploadDataSource {
       context: any;
     }) {
       request.http.headers.append("Authorization", " " + context.authorizationHeader);
-      console.log(request.http.headers)
+      PrintServiceDetails(request.http)
       return request;
     }
   }
