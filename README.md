@@ -25,4 +25,4 @@ The only requirement is to have graphql server library in that language that sup
 There is idea that to seperate streaming videos outside the router and create next to router for this kind of thing. 
 
 ## Draft of architecture.
-![Zrzut ekranu 2023-06-23 002441](https://github.com/Shibbaz/Graphs-Demo/assets/107750344/b359692b-bb1a-47e0-b682-19d9f9de972a)
+![Zrzut ekranu 2023-06-23 002441](https://github.com/Shibbaz/GraphBoard/blob/main/.excalidraw.png)
