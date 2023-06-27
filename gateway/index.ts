@@ -1,34 +1,36 @@
-const { ApolloServer } = require('apollo-server');
-const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
-const { readFileSync } = require('fs');
-const supergraphSdl = readFileSync('./supergraph.graphql').toString();
-const { ApolloLogPlugin } = require('apollo-log');
-const plugins = [ApolloLogPlugin];
+const { expressMiddleware } = require('@apollo/server/express4');
+const cors = require('cors');
+const {graphqlUploadExpress} = require('graphql-upload')
+import { json } from 'body-parser';
+const express = require('express');
+import {gateway} from './src/gateway'
+const { ApolloServer } = require("apollo-server-express");
 
 
-const gateway = new ApolloGateway({
-    supergraphSdl,
-    buildService({ url }) {
-      return new RemoteGraphQLDataSource({
-        url,
-        willSendRequest({ request, context }) {
-          request.http.headers.set("Authorization", " " + context.authorizationHeader);
-        }
-      });
-    }
-});
+const app = express();
+app.use(graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 10 }));
 
-
-const server = new ApolloServer({
+const runServer = async () => {
+  const server = new ApolloServer({
     gateway,
-    context: ({ req }) => {
+    context: ({ req }:any) => {
       return {
         serverRequest: req,
         authorizationHeader: req.headers.authorization
       };
-  }
-});
+  },
 
-server.listen().then(({ url }) => {
-    console.log(`🚀 Gateway ready at ${url}`);
-}).catch(err => {console.error(err)});
+  });
+  await server.start();
+  server.applyMiddleware({ app, path: "/" });
+
+  return new Promise((resolve) => {
+    app.listen(4000, resolve);
+    console.log("🚀 Server is Successfully running on port 4000.")
+  });
+};
+
+runServer().catch(error => {
+  console.error('💥  Failed to start server:', error);
+  process.exit(1);
+});

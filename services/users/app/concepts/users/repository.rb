@@ -49,4 +49,3 @@ module Concepts
         end
     end
 end
-

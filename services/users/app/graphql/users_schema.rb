@@ -1,6 +1,5 @@
 class UsersSchema < GraphQL::Schema
   include ApolloFederation::Schema
-  federation version: '3.8'
   query(Types::QueryType)
   mutation(Types::MutationType)
   orphan_types Types::UserType
