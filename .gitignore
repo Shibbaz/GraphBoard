@@ -6,3 +6,4 @@
 .vscode/*
 /gateway/package-lock.json
 /gateway/yarn.lock
+/gateway/src/dist/*
