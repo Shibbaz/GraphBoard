@@ -8,10 +8,9 @@ var AuthenticationAndUploadDataSource = require('./data_source').AuthenticationA
 exports.gateway = new ApolloGateway({
     supergraphSdl: supergraphSdl,
     buildService: function (_a) {
-        var name = _a.name, url = _a.url;
+        var url = _a.url;
         return new AuthenticationAndUploadDataSource({
-            url: url,
-            useChunkedTransfer: true
+            url: url
         });
     }
 });
