@@ -2,12 +2,11 @@ module Concepts
   module Videos
     module Commands
       class Update < ActiveJob::Base
+        extend T::Sig
+
         def call(event)
-          id = event.data.fetch(:video_id)
-          adapter = event.data.fetch(:adapter)
-          input = event.data.fetch(:args)
-          video = adapter.find(id)
-          raise ActiveRecord::RecordNotFound unless video
+          video = T.must(event.data.fetch(:video))
+          input = T.must(event.data.fetch(:args))
           video.update!(input)
         end
       end
