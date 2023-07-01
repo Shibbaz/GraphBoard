@@ -43,7 +43,7 @@ RSpec.describe Concepts::Offers::Repository, type: :request do
     it "expects not to create offer" do
       expect {
         repository.create(
-          informations: nil,
+          informations: {},
           current_user_id: SecureRandom.uuid
         )
       }.to raise_error(ArgumentError, "Please, pass params. Params not found")

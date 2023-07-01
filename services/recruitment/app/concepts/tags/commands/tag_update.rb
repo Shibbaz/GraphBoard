@@ -2,9 +2,11 @@ module Concepts
   module Tags
     module Commands
       class TagUpdate < ActiveJob::Base
+        extend T::Sig
+
         def call(event)
-          tag = event.data.fetch(:tag)
-          informations = event.data.fetch(:informations)
+          tag = T.must(event.data.fetch(:tag))
+          informations = T.must(event.data.fetch(:informations))
           tag.update(informations)
         end
       end

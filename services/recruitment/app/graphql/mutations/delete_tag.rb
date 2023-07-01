@@ -3,7 +3,8 @@ module Mutations
     field :status, Integer, null: false
     argument :tag_id, ID, required: true
 
-    def resolve(tag_id: nil)
+    sig do params(tag_id: String).returns(T.anything) end
+      def resolve(tag_id: nil)
       Authenticate.call(context: context)
       Concepts::Tags::Repository.new.delete(
         tag_id: tag_id

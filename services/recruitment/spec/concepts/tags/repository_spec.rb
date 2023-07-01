@@ -19,7 +19,7 @@ RSpec.describe Concepts::Tags::Repository, type: :request do
     it "expects not to create tag" do
       expect {
         repository.create(
-          informations: nil
+          informations: {}
         )
       }.to raise_error(ArgumentError, "Please, pass params. Params not found")
     end

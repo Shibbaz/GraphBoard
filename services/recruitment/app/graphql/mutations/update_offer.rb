@@ -5,6 +5,7 @@ module Mutations
     argument :informations, Types::Input::OfferInput, required: true
     argument :offer_id, ID, required: true
 
+    sig do params(informations: Hash, offer_id: String).returns(T.anything) end
     def resolve(informations:, offer_id:)
       Authenticate.call(context: context)
       Concepts::Offers::Repository.new.update(
