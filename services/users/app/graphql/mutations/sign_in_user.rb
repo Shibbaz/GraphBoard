@@ -1,3 +1,5 @@
+#typed: true
+
 module Mutations
     class SignInUser < BaseMutation  
         argument :credentials, Types::Input::AuthProviderCredentialsInput, required: false

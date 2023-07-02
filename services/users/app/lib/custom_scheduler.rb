@@ -1,3 +1,5 @@
+#typed: true
+
 class CustomScheduler
   extend T::Sig
 

@@ -1,3 +1,5 @@
+#typed: true
+
 module Mutations
   class DeleteUser < Mutations::BaseMutation
     field :status, Integer, null: false

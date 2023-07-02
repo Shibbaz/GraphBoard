@@ -1,3 +1,5 @@
+#typed: true
+
 module Mutations
   class CreateUser < Mutations::BaseMutation
     argument :auth_provider, Types::Input::AuthProviderCredentialsInput, required: false

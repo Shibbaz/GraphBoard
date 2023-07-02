@@ -1,3 +1,5 @@
+#typed: true
+
 module Concepts
     module Users
         module Commands
