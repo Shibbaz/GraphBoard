@@ -5,7 +5,6 @@ module Concepts
         extend T::Sig
 
         def call(event)
-          adapter = T.must(event.data.fetch(:adapter))
           video = T.must(event.data.fetch(:video))
           video.destroy!
           Storage::Delete.call(

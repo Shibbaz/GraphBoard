@@ -30,8 +30,8 @@ module Concepts
       end
 
       sig do params(
-          informations: T.nilable(T.any(Types::Input::TagInput, Hash)),
-          tag_id: String
+          tag_id: String,
+          informations: T.nilable(T.any(Types::Input::TagInput, Hash))
         ).returns(RailsEventStore::Client || ArgumentError) 
       end
       def update(tag_id:, informations:)

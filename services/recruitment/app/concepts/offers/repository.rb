@@ -14,16 +14,14 @@ module Concepts
       def create(informations:, current_user_id:)
         raise ArgumentError.new "Please, pass params. Params not found" if informations.empty? || current_user_id.empty?
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            OfferWasCreated.new(
-              data: {
-                current_user_id: current_user_id,
-                offer_id: SecureRandom.uuid,
-                adapter: @adapter,
-                informations: informations.to_h
-              }
-            ),
-            stream_name: "Offer-#{SecureRandom.uuid}"
+          Events.publish({
+            current_user_id: current_user_id,
+            offer_id: SecureRandom.uuid,
+            adapter: @adapter,
+            informations: informations.to_h
+          }, 
+            event: OfferWasCreated, 
+            event_id: SecureRandom.uuid
           )
         end
       end
@@ -33,12 +31,12 @@ module Concepts
       def update(current_user_id:, offer_id:, informations:)
         offer = T.must(@adapter.find_by(id: offer_id, author: current_user_id))
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            OfferWasUpdated.new(data: {
-              offer: offer,
-              informations: informations.to_h
-            }),
-            stream_name: "Offer-#{offer_id}"
+          Events.publish({
+            offer: offer,
+            informations: informations.to_h
+          }, 
+            event: OfferWasUpdated, 
+            event_id: offer_id
           )
         end
       rescue TypeError
@@ -50,11 +48,11 @@ module Concepts
       def delete(current_user_id:, offer_id:)
         offer = T.must(@adapter.find_by(id: offer_id, author: current_user_id))
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            OfferWasDeleted.new(data: {
-              offer: offer
-            }),
-            stream_name: "Offer-#{offer_id}"
+          Events.publish({
+            offer: offer,
+          }, 
+            event: OfferWasDeleted, 
+            event_id: offer_id
           )
         end
       rescue TypeError
@@ -66,14 +64,12 @@ module Concepts
       def apply_on_job_offer(current_user_id:, offer_id:)
         offer = T.must(@adapter.find_by(id: offer_id))
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            AppliedOnJobOffer.new(
-              data: {
-                offer: offer,
-                current_user_id: current_user_id
-              }
-            ),
-            stream_name: "Offer-#{offer_id}"
+          Events.publish({
+            offer: offer,
+            current_user_id: current_user_id
+          }, 
+            event: AppliedOnJobOffer, 
+            event_id: offer_id
           )
         end
       rescue TypeError

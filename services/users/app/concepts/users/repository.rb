@@ -28,14 +28,14 @@ module Concepts
                 T.must(auth_provider)
                 ActiveRecord::Base.transaction do
                     id = SecureRandom.uuid
-                    Rails.configuration.event_store.publish(
-                      UserWasCreated.new(data:{
-                        id: id,
-                        adapter: @adapter,
-                        informations: informations.to_h,
-                        auth_provider: auth_provider.to_h
-                      }),
-                      stream_name: "User-#{id}"
+                    Events.publish({
+                      id: id,
+                      adapter: @adapter,
+                      informations: informations.to_h,
+                      auth_provider: auth_provider.to_h
+                    }, 
+                      event: UserWasCreated, 
+                      event_id: id
                     )
                 end
             rescue TypeError
@@ -50,13 +50,7 @@ module Concepts
             def update(current_user:, args:)
                 T.must(current_user)
                 ActiveRecord::Base.transaction do
-                    Rails.configuration.event_store.publish(
-                      UserWasUpdated.new(data:{
-                        current_user: current_user,
-                        args: args.to_h
-                      }),
-                      stream_name: "User-#{T.must(current_user).id}"
-                    )
+                  Events.publish({current_user: current_user, args: args.to_h}, event: UserWasUpdated, event_id: current_user.id)
                 end
             rescue TypeError
               raise ActiveRecord::RecordNotFound
@@ -69,12 +63,7 @@ module Concepts
             def delete(current_user:)
                 T.must(current_user)
                 ActiveRecord::Base.transaction do
-                    Rails.configuration.event_store.publish(
-                      UserWasDeleted.new(data:{
-                        current_user: current_user
-                      }),
-                      stream_name: "User-#{T.must(current_user).id}"
-                    )
+                    Events.publish({current_user: current_user}, event: UserWasDeleted, event_id: current_user.id)
                 end
             rescue TypeError
               raise ActiveRecord::RecordNotFound

@@ -21,14 +21,14 @@ module Concepts
         raise FileInvalidTypeError if file.nil? || File.extname(file.path) != ".mov"
         ActiveRecord::Base.transaction do
           id = SecureRandom.uuid
-          Rails.configuration.event_store.publish(
-            VideoWasCreated.new(data: {
-              id: id,
-              args: args.to_h,
-              file: file.tempfile,
-              adapter: @adapter
-            }),
-            stream_name: "Video-#{id}"
+          Events.publish({
+            id: id,
+            args: args.to_h,
+            file: file.tempfile,
+            adapter: @adapter
+          }, 
+            event: VideoWasCreated, 
+            event_id: id
           )
         end
       end
@@ -45,13 +45,7 @@ module Concepts
       def update(video_id:, args:)
         video = T.must(@adapter.find_by(id: video_id))
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            VideoWasUpdated.new(data: {
-              video: video,
-              args: args.to_h
-            }),
-            stream_name: "Video-#{video_id}"
-          )
+          Events.publish({video: video, args: args.to_h}, event: VideoWasUpdated, event_id: video_id)
         end
       rescue TypeError
         raise ActiveRecord::RecordNotFound
@@ -65,13 +59,7 @@ module Concepts
       def delete(video_id:)
         video = T.must(@adapter.find_by(id: video_id))
         ActiveRecord::Base.transaction do
-          Rails.configuration.event_store.publish(
-            VideoWasDeleted.new(data: {
-              video: video,
-              adapter: @adapter
-            }),
-            stream_name: "Video-#{video_id}"
-          )
+          Events.publish({video: video}, event: VideoWasDeleted, event_id: video_id)
         end
       rescue TypeError
         raise ActiveRecord::RecordNotFound
