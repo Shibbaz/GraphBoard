@@ -4,6 +4,8 @@ module Mutations
     argument :informations, Types::Input::UserInput, required: true
   
     field :status, Integer, null: false
+
+    sig do params(informations: T.nilable(Hash), auth_provider: T.nilable(Hash)).returns(T.anything) end
     def resolve(informations: nil, auth_provider: nil)
       Concepts::Users::Repository.new.create(
         informations: informations,

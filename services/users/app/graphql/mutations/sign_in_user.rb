@@ -5,6 +5,7 @@ module Mutations
         field :token, String, null: true
         field :user, Types::UserType, null: true
 
+        sig do params(credentials: T.nilable(Hash)).returns(T.anything) end
         def resolve(credentials: nil)
             return unless credentials
 

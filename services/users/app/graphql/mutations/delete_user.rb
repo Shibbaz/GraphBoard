@@ -2,6 +2,7 @@ module Mutations
   class DeleteUser < Mutations::BaseMutation
     field :status, Integer, null: false
 
+    sig do returns(T.anything) end
     def resolve
       Authenticate.call(context: context)
       Concepts::Users::Repository.new.delete(current_user: context[:current_user])
