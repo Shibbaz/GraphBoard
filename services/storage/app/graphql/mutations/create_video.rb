@@ -4,8 +4,7 @@ module Mutations
     argument :file, ApolloUploadServer::Upload
     field :status, Integer, null: false
 
-    sig do params(informations: T.nilable(Hash), file: T.nilable(T.anything)).returns(T.anything) end
-      def resolve(informations:, file:)
+    def resolve(informations:, file:)
       Authenticate.call(context: context)
       Concepts::Videos::Repository.new.create(
         args: informations,

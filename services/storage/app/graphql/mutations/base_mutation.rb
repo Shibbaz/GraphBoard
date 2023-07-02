@@ -5,6 +5,5 @@ module Mutations
     input_object_class Types::BaseInputObject
     object_class Types::BaseObject
     
-    extend T::Sig
   end
 end

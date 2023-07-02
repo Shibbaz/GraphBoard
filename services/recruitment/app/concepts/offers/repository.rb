@@ -9,7 +9,8 @@ module Concepts
         @adapter = adapter
       end
 
-      sig do params(informations: Hash, current_user_id: String).returns(RailsEventStore::Client || ArgumentError) end
+      sig do params(informations: T.nilable(T.any(Types::Input::OfferInput, Hash)), current_user_id: T.nilable(String))
+        .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def create(informations:, current_user_id:)
         raise ArgumentError.new "Please, pass params. Params not found" if informations.empty? || current_user_id.empty?
         ActiveRecord::Base.transaction do
@@ -27,7 +28,8 @@ module Concepts
         end
       end
 
-      sig do params(current_user_id:String, offer_id:String, informations:Hash).returns(RailsEventStore::Client || ActiveRecord::RecordNotFound) end
+      sig do params(current_user_id: T.nilable(String), offer_id: T.nilable(String), informations: T.nilable(T.any(Types::Input::OfferInput, Hash)))
+        .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def update(current_user_id:, offer_id:, informations:)
         offer = T.must(@adapter.find_by(id: offer_id, author: current_user_id))
         ActiveRecord::Base.transaction do
@@ -43,7 +45,8 @@ module Concepts
         raise ActiveRecord::RecordNotFound
       end
 
-      sig do params(current_user_id:String, offer_id:String).returns(RailsEventStore::Client || ActiveRecord::RecordNotFound) end
+      sig do params(current_user_id: T.nilable(String), offer_id: T.nilable(String))
+        .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def delete(current_user_id:, offer_id:)
         offer = T.must(@adapter.find_by(id: offer_id, author: current_user_id))
         ActiveRecord::Base.transaction do
@@ -58,7 +61,8 @@ module Concepts
         raise ActiveRecord::RecordNotFound
       end
 
-      sig do params(current_user_id:String, offer_id:String).returns(RailsEventStore::Client || ActiveRecord::RecordNotFound) end
+      sig do params(current_user_id:String, offer_id:String)
+        .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def apply_on_job_offer(current_user_id:, offer_id:)
         offer = T.must(@adapter.find_by(id: offer_id))
         ActiveRecord::Base.transaction do

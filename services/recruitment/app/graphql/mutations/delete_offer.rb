@@ -3,7 +3,6 @@ module Mutations
     field :status, Integer, null: false
     argument :offer_id, ID, required: true
 
-    sig do params(offer_id: String).returns(T.anything) end
     def resolve(offer_id: nil)
       Authenticate.call(context: context)
       Concepts::Offers::Repository.new.delete(

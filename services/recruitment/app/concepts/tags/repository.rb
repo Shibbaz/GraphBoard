@@ -9,7 +9,9 @@ module Concepts
         @adapter = adapter
       end
 
-      sig do params(informations: Hash).returns(RailsEventStore::Client || ArgumentError) end
+      sig do params(informations: T.nilable(T.any(Types::Input::TagInput, Hash))
+        ).returns(RailsEventStore::Client || ArgumentError) 
+      end
       def create(informations:)
         raise ArgumentError.new "Please, pass params. Params not found" if informations.empty?
         ActiveRecord::Base.transaction do
@@ -27,7 +29,11 @@ module Concepts
         end
       end
 
-      sig do params(tag_id:String, informations: Hash).returns(RailsEventStore::Client || ArgumentError) end
+      sig do params(
+          informations: T.nilable(T.any(Types::Input::TagInput, Hash)),
+          tag_id: String
+        ).returns(RailsEventStore::Client || ArgumentError) 
+      end
       def update(tag_id:, informations:)
         tag = T.must(@adapter.find_by(id: tag_id))
         ActiveRecord::Base.transaction do
@@ -43,7 +49,10 @@ module Concepts
         raise ActiveRecord::RecordNotFound
       end
 
-      sig do params(tag_id:String).returns(RailsEventStore::Client || ArgumentError) end
+      sig do params(
+          tag_id: String
+        ).returns(RailsEventStore::Client || ArgumentError) 
+      end
       def delete(tag_id:)
         tag = T.must(@adapter.find_by(id: tag_id))
         ActiveRecord::Base.transaction do

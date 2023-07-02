@@ -4,8 +4,7 @@ module Mutations
 
     field :status, Integer, null: false
 
-    sig do params(informations: Hash).returns(T.anything) end
-      def resolve(informations: nil)
+    def resolve(informations: nil)
       Authenticate.call(context: context)
       Concepts::Offers::Repository.new.create(
         informations: informations,

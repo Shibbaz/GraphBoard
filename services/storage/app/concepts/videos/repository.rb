@@ -9,7 +9,13 @@ module Concepts
         @adapter = adapter
       end
 
-      sig do params(args: Hash, file: T.anything).returns(RailsEventStore::Client || ArgumentError || FileInvalidTypeError) end
+      sig do params(
+          args: T.nilable(T.any(Types::Input::VideoInput, Hash)),
+          file: T.anything
+        ).returns(
+          T.any(RailsEventStore::Client, ArgumentError, FileInvalidTypeError)
+        )
+      end
       def create(args:, file:)
         raise ArgumentError if args.nil? || args == {}
         raise FileInvalidTypeError if file.nil? || File.extname(file.path) != ".mov"
@@ -27,7 +33,15 @@ module Concepts
         end
       end
 
-      sig do params(video_id: String, args: Hash).returns(RailsEventStore::Client || ActiveRecord::RecordNotFound) end
+      sig do params(
+          video_id: String, 
+          args: T.nilable(T.any(Types::Input::VideoInput, Hash))
+        ).returns(
+            T.any(RailsEventStore::Client,
+            T.class_of(ActiveRecord::RecordNotFound)
+          )
+        ) 
+      end
       def update(video_id:, args:)
         video = T.must(@adapter.find_by(id: video_id))
         ActiveRecord::Base.transaction do
@@ -43,7 +57,11 @@ module Concepts
         raise ActiveRecord::RecordNotFound
       end
 
-      sig do params(video_id: String).returns(RailsEventStore::Client || ActiveRecord::RecordNotFound) end
+      sig do params(video_id: String).returns(
+        T.any(RailsEventStore::Client,
+        T.class_of(ActiveRecord::RecordNotFound))
+      )
+      end
       def delete(video_id:)
         video = T.must(@adapter.find_by(id: video_id))
         ActiveRecord::Base.transaction do
