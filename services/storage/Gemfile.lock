@@ -250,6 +250,14 @@ GEM
     rubocop-performance (1.18.0)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
+    ruby-lsp (0.6.2)
+      language_server-protocol (~> 3.17.0)
+      sorbet-runtime
+      syntax_tree (>= 6.1.1, < 7)
+    ruby-lsp-rails (0.2.0)
+      rails (>= 6.0)
+      ruby-lsp (>= 0.6.2, < 0.8.0)
+      sorbet-runtime (>= 0.5.9897)
     ruby-next (0.15.3)
       ruby-next-core (= 0.15.3)
       ruby-next-parser (>= 3.1.1.0)
@@ -345,6 +353,7 @@ DEPENDENCIES
   rails (~> 7.0.5)
   rails_event_store (~> 2.9)
   rspec-rails
+  ruby-lsp-rails
   ruby_event_store-rspec
   search_object_graphql
   sorbet
