@@ -25,11 +25,9 @@ func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
 	header_authorization := r.Header.Get("HTTP_AUTHORIZATION")
 	if header_authorization == "" {
-		message := "Error: You cannot access, no token provided."
 		loggerRequest(r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
-		fmt.Printf(" Request { %s }", message)
 		w.Header().Set("Content-Type", "application/json")
-		http.Error(w, fmt.Sprintf("%s", message), http.StatusInternalServerError)
+		w.Write([]byte("{\"Error\": \"NoTokenProvidedError\"}"))
 		return
 	}
 	key := r.URL.Query().Get(st.key)
