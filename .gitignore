@@ -7,3 +7,5 @@
 /gateway/package-lock.json
 /gateway/yarn.lock
 /gateway/src/dist/*
+services/video_streaming/.env
+services/video_streaming/go.sum
