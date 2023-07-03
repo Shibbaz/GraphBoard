@@ -18,7 +18,7 @@ type storageHandler struct {
 	key    string
 }
 
-func (st storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	key := r.URL.Query().Get(st.key)
 
 	creds := credentials.NewEnvCredentials()

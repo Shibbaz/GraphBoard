@@ -8,7 +8,7 @@ import (
 
 func main() {
 	siteMux := http.NewServeMux()
-	st := storageHandler{bucket: "files", key: "video_id"}
+	st := &storageHandler{bucket: "files", key: "video_id"}
 	siteMux.HandleFunc("/", st.ServeHTTP)
 	srv := &http.Server{
 		Addr:         ":8080",
