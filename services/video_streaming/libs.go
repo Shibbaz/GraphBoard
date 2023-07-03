@@ -7,14 +7,14 @@ import (
 	session "github.com/aws/aws-sdk-go/aws/session"
 )
 
-func getResolver() endpoints.ResolverFunc {
+func getResolver(url string) endpoints.ResolverFunc {
 	defaultResolver := endpoints.DefaultResolver()
 
 	resolver := func(service, region string, optFns ...func(*endpoints.Options)) (endpoints.ResolvedEndpoint, error) {
 		var svcURL string
 		switch service {
 		case endpoints.S3ServiceID:
-			svcURL = "http://localhost:9000"
+			svcURL = url
 		default:
 			return defaultResolver.EndpointFor(service, region, optFns...)
 		}
@@ -33,7 +33,7 @@ func getSession(creds *credentials.Credentials) *session.Session {
 			S3ForcePathStyle: aws.Bool(true),
 			Credentials:      creds,
 
-			EndpointResolver: endpoints.ResolverFunc(getResolver()),
+			EndpointResolver: endpoints.ResolverFunc(getResolver("http://localhost:9000")),
 		},
 		SharedConfigState: session.SharedConfigEnable,
 	}))

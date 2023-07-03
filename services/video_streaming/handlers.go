@@ -13,15 +13,20 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Query().Get("video_id")
+type storageHandler struct {
+	bucket string
+	key    string
+}
+
+func (st storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	key := r.URL.Query().Get(st.key)
 
 	creds := credentials.NewEnvCredentials()
 
 	sess := getSession(creds)
 
 	s3c := s3.New(sess)
-	bucket := "files"
+	bucket := st.bucket
 
 	output, err := s3c.GetObject(&s3.GetObjectInput{
 		Bucket: aws.String(bucket),
