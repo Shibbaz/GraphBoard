@@ -19,8 +19,9 @@ type storageHandler struct {
 }
 
 func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Query().Get(st.key)
+	start := time.Now()
 
+	key := r.URL.Query().Get(st.key)
 	creds := credentials.NewEnvCredentials()
 
 	sess := getSession(creds)
@@ -41,8 +42,8 @@ func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(buffErr)
 		return
 	}
+	loggerRequest(r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
 	reader := bytes.NewReader(buff)
-
 	http.ServeContent(w, r, key, time.Now(), reader)
 	return
 }

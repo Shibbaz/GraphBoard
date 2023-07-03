@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/endpoints"
@@ -38,4 +41,8 @@ func getSession(creds *credentials.Credentials) *session.Session {
 		SharedConfigState: session.SharedConfigEnable,
 	}))
 	return data
+}
+
+func loggerRequest(addr string, method string, url string, duration time.Duration) {
+	fmt.Println("\nRequest { Elapsed: ", duration, " Method: ", method, " Endpoint:", url, "}")
 }
