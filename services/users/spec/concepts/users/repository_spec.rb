@@ -29,6 +29,10 @@ RSpec.describe Concepts::Users::Repository, type: :request do
             expect(event).to(have_published(UserWasCreated))
         end
 
+        it "expects to raise type error " do
+            expect{repository.create(auth_provider: 0.6, informations: 0.6)}.to raise_error(TypeError)
+        end
+
         it 'expects not to create user' do
             expect{ 
                 repository.create(
@@ -49,6 +53,10 @@ RSpec.describe Concepts::Users::Repository, type: :request do
             )
             expect(event).to(have_published(UserWasDeleted))
             expect{ user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+        end
+
+        it "expects to raise type error " do
+            expect{repository.delete(current_user: 0.6)}.to raise_error(TypeError)
         end
 
         it 'expects to delete non-existing user' do
@@ -77,6 +85,10 @@ RSpec.describe Concepts::Users::Repository, type: :request do
             expect(user.phone).to eq(informations[:phone])
             expect(user.description).to eq(informations[:description])
 
+        end
+
+        it "expects to raise type error " do
+            expect{repository.update(current_user: 0.6, args: 0.6)}.to raise_error(TypeError)
         end
 
         it 'expects to update non-existing user' do
