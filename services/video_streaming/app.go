@@ -11,7 +11,7 @@ import (
 
 func main() {
 	siteMux := http.NewServeMux()
-	st := &storageHandler{bucket: "files", key: "video_id"}
+	st := &storageModel{bucket: "files", key: "video_id"}
 
 	siteMux.HandleFunc("/", st.ServeHTTP)
 	handler := cors.Default().Handler(siteMux)

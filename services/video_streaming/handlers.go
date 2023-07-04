@@ -12,20 +12,17 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-type storageHandler struct {
+type storageModel struct {
 	bucket string
 	key    string
 }
 
-func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (st *storageModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
-	header_authorization := r.Header.Get("HTTP_AUTHORIZATION")
-	if header_authorization == "" {
-		loggerRequest(r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte("{\"Error\": \"NoTokenProvidedError\"}"))
+	if authErrorHandle(w, r, &start) {
 		return
 	}
+
 	key := r.URL.Query().Get(st.key)
 	buff, err := st.readMinioObject(key)
 	if err != nil {
@@ -37,7 +34,7 @@ func (st *storageHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func (st *storageHandler) readMinioObject(key string) ([]byte, error) {
+func (st *storageModel) readMinioObject(key string) ([]byte, error) {
 	creds := credentials.NewEnvCredentials()
 
 	sess := getSession(creds)
