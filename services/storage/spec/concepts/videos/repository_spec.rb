@@ -30,6 +30,11 @@ RSpec.describe Concepts::Videos::Repository, type: :request do
       expect(proof[:rules][0]["age"]).to eq(args[:rules][0][:age])
     end
 
+    
+    it "expects to raise type error " do
+      expect{repository.create(args: 6, file: 6)}.to raise_error(TypeError)
+    end
+
     it "expects not to create video" do
       expect {
         repository.create(
@@ -57,6 +62,10 @@ RSpec.describe Concepts::Videos::Repository, type: :request do
       )
       expect(event).to(have_published(VideoWasDeleted))
       expect { video.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "expects to raise type error " do
+      expect{repository.delete(video_id: 0.5)}.to raise_error(TypeError)
     end
 
     it "expects to delete non-existing video" do
@@ -88,6 +97,10 @@ RSpec.describe Concepts::Videos::Repository, type: :request do
       expect(video[:name]).to eq("Two Piece")
       expect(video[:description]).to eq(quote)
       expect(video[:video_type]).to eq("video")
+    end
+
+    it "expects to raise type error " do
+      expect{repository.update(video_id: 0.5, args: 0)}.to raise_error(TypeError)
     end
 
     it "expects to update non-existing video" do
