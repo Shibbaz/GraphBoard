@@ -40,6 +40,10 @@ RSpec.describe Concepts::Offers::Repository, type: :request do
       expect(event).to(have_published(OfferWasCreated))
     end
 
+    it "expects to raise type error " do
+      expect{repository.create(informations: 6, current_user_id: 0.6)}.to raise_error(TypeError)
+    end
+
     it "expects not to create offer" do
       expect {
         repository.create(
@@ -65,6 +69,10 @@ RSpec.describe Concepts::Offers::Repository, type: :request do
       )
       expect(event).to(have_published(OfferWasDeleted))
       expect { offer.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "expects to raise type error " do
+      expect{repository.delete(current_user_id: 0.6, offer_id: 0.6)}.to raise_error(TypeError)
     end
 
     it "expects to delete non-existing offer" do
@@ -99,6 +107,10 @@ RSpec.describe Concepts::Offers::Repository, type: :request do
       expect(event).to(have_published(OfferWasUpdated))
       offer.reload
       expect(offer.name).to eq("New Name")
+    end
+
+    it "expects to raise type error " do
+      expect{repository.update(current_user_id: 0.6, offer_id: 0.6, informations: 0.6)}.to raise_error(TypeError)
     end
 
     it "expects to update non-existing offer" do
