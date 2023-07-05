@@ -35,7 +35,7 @@ module Concepts
 
       sig do params(
           video_id: String, 
-          args: T.nilable(T.any(Types::Input::VideoInput, Hash))
+          args: T.any(Types::Input::VideoInput, Hash, NilClass)
         ).returns(
             T.any(RailsEventStore::Client,
             T.class_of(ActiveRecord::RecordNotFound)
