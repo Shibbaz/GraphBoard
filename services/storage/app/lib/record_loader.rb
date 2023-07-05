@@ -1,7 +1,7 @@
 class RecordLoader < GraphQL::Batch::Loader
   extend T::Sig
 
-  sig do params(model: T.anything).returns(String) end
+  sig do params(model: T.anything).returns(T.anything) end
   def initialize(model)
     @model = model
   end

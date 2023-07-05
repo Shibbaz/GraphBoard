@@ -9,12 +9,6 @@ module Types
 
     field :contact_details, GraphQL::Types::JSON, null: true
 
-    def self.resolve_reference(object, _context)
-      cache_fragment(context: context, expires_in: 25.minutes) { 
-        RecordLoader.for(Offer).load(object[:id]) 
-      }
-    end
-
     def author
       cache_fragment(context: context, expires_in: 25.minutes) {
         {__typename: "User", id: object[:author]}

@@ -15,9 +15,8 @@ module Concepts
             end
 
             sig do params(
-                  informations: T.nilable(
-                    T.any(Types::Input::UserInput, Hash)
-                  ), 
+                  informations: 
+                    T.any(Types::Input::UserInput, Hash, NilClass), 
                   auth_provider: T.nilable(
                     T.any(Types::Input::AuthProviderCredentialsInput, Hash)
                   )
@@ -44,7 +43,7 @@ module Concepts
 
             sig do params(
                 current_user: T.nilable(User),
-                args: T.nilable(T.any(Types::Input::UserInput, Hash)))
+                args: T.any(Types::Input::UserInput, Hash, NilClass))
               .returns(T.anything)
             end
             def update(current_user:, args:)

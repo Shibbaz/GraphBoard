@@ -224,33 +224,20 @@ type Offer {
   tags: [ID!]
 }
 
-"""The connection type for Offer."""
-type OfferConnection {
-  """A list of edges."""
-  edges: [OfferEdge]
-
-  """A list of nodes."""
-  nodes: [Offer]
-
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-}
-
-"""An edge in a connection."""
-type OfferEdge {
-  """A cursor for use in pagination."""
-  cursor: String!
-
-  """The item at the end of the edge."""
-  node: Offer
-}
-
 input OfferInput {
   contactDetails: [JSON!]
   description: String
   name: String
   requirements: [JSON!]
   tags: [ID!]
+}
+
+type OffersUser {
+  id: ID
+  name: String
+  phone: Int
+  surname: String
+  technologies: [JSON!]
 }
 
 """Information about pagination in a connection."""
@@ -367,37 +354,9 @@ type User
   @join__type(graph: RECRUITMENTS, key: "id")
   @join__type(graph: STORAGES, key: "id")
 {
-  appliedOffers(
-    """Returns the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-
-    """Returns the first _n_ elements from the list."""
-    first: Int
-
-    """Returns the last _n_ elements from the list."""
-    last: Int
-  ): OfferConnection @join__field(graph: RECRUITMENTS)
+  appliedOffers: [OffersUser!]! @join__field(graph: RECRUITMENTS)
   birthday: String @join__field(graph: USERS)
-  createdOffer(
-    """Returns the elements in the list that come after the specified cursor."""
-    after: String
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-
-    """Returns the first _n_ elements from the list."""
-    first: Int
-
-    """Returns the last _n_ elements from the list."""
-    last: Int
-  ): OfferConnection @join__field(graph: RECRUITMENTS)
+  createdOffers: [OffersUser!]! @join__field(graph: RECRUITMENTS)
   description: String @join__field(graph: USERS)
   email: String @join__field(graph: USERS)
   id: ID! @join__field(graph: USERS)
@@ -490,4 +449,3 @@ enum join__Graph {
   STORAGES @join__graph(name: "storages" url: "http://localhost:3000/graphql")
   USERS @join__graph(name: "users" url: "http://localhost:3001/graphql")
 }
-
