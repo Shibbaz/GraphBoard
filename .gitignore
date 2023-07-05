@@ -7,3 +7,6 @@
 /gateway/package-lock.json
 /gateway/yarn.lock
 /gateway/src/dist/*
+/services/recruitment/sorbet/*
+/services/storage/sorbet/*
+/services/users/sorbet/*

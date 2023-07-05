@@ -33,8 +33,4 @@ RSpec.describe Mutations::UpdateUser, type: :request do
             )}.to raise_error(GraphQL::ExecutionError,'Authentication Error')
         end
     end
-<<<<<<< HEAD
 end
-=======
-end
->>>>>>> main

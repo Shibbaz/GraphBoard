@@ -1,13 +1,16 @@
+#typed: true
+
 module Concepts
     module Users
         module Commands
             class UserCreate < ActiveJob::Base
+                extend T::Sig
 
                 def call(event)
-                    informations = event.data.fetch(:informations)
-                    auth_provider = event.data.fetch(:auth_provider)
-                    adapter = event.data.fetch(:adapter)
-                    id = event.data.fetch(:id)
+                    informations = T.must(event.data.fetch(:informations))
+                    auth_provider = T.must(event.data.fetch(:auth_provider))
+                    adapter = T.must(event.data.fetch(:adapter))
+                    id = T.must(event.data.fetch(:id))
                     adapter.create!(
                         id: id,
                         name: informations[:name],

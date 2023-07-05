@@ -2,8 +2,10 @@ module Concepts
   module Offers
     module Commands
       class OfferDelete < ActiveJob::Base
+        extend T::Sig
+        
         def call(event)
-          offer = event.data.fetch(:offer)
+          offer = T.must(event.data.fetch(:offer))
           offer.destroy!
         end
       end

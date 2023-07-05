@@ -11,15 +11,15 @@ RSpec.describe Mutations::DeleteVideo, type: :request do
 
     it "expects not to delete video, video does not exist" do
       random_video_id = SecureRandom.uuid
-      expect(Mutations::DeleteVideo.new(object: nil, field: nil, context: {
-        current_user_id: SecureRandom.uuid
-      }).resolve(video_id: random_video_id)).to eq(GraphQL::ExecutionError.new("Couldn't find Video with 'id'=#{random_video_id}"))
+      expect{Mutations::DeleteVideo.new(object: nil, field: nil, context: {
+        current_user_id: random_video_id
+      }).resolve(video_id: random_video_id)}.to raise_error(GraphQL::ExecutionError, "ActiveRecord::RecordNotFound")
     end
 
     it "expects to fails deleting video" do
-      expect(Mutations::DeleteVideo.new(object: nil, field: nil, context: {
+      expect{Mutations::DeleteVideo.new(object: nil, field: nil, context: {
         current_user_id: nil
-      }).resolve(video_id: nil)).to eq(GraphQL::ExecutionError.new("Authentication Error"))
+      }).resolve(video_id: nil)}.to raise_error(GraphQL::ExecutionError, "Authentication Error")
     end
   end
 end

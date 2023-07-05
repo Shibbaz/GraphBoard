@@ -3,6 +3,7 @@ module Mutations
     argument :informations, Types::Input::TagInput, required: true
 
     field :status, Integer, null: false
+
     def resolve(informations: nil)
       Authenticate.call(context: context)
       Concepts::Tags::Repository.new.create(

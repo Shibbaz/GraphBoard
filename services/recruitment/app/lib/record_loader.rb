@@ -11,7 +11,7 @@ class RecordLoader < GraphQL::Batch::Loader
   sig do params(ids: T.anything).returns(T.anything) end
   def perform(ids)
     T.must(@model)
-    @model.where(id: ids).each { |record| fulfill(record.id, record) }
-    ids.each { |id| fulfill(id, nil) unless fulfilled?(id) }
+    @model.where(author: ids).each { |record| fulfill(record.author, record) }
+    ids.each { |author| fulfill(author, nil) unless fulfilled?(author) }
   end
 end

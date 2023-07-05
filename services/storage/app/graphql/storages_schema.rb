@@ -7,7 +7,7 @@ class StoragesSchema < GraphQL::Schema
 
   use ApolloFederation::Tracing
 
-  use GraphQL::Dataloader
+  use GraphQL::Batch
 
   def self.type_error(err, context)
     super

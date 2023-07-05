@@ -3,6 +3,7 @@ module Mutations
     argument :informations, Types::Input::VideoInput, required: true
     argument :file, ApolloUploadServer::Upload
     field :status, Integer, null: false
+
     def resolve(informations:, file:)
       Authenticate.call(context: context)
       Concepts::Videos::Repository.new.create(

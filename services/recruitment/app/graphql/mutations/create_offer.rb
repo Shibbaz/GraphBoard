@@ -3,6 +3,7 @@ module Mutations
     argument :informations, Types::Input::OfferInput, required: true
 
     field :status, Integer, null: false
+
     def resolve(informations: nil)
       Authenticate.call(context: context)
       Concepts::Offers::Repository.new.create(
