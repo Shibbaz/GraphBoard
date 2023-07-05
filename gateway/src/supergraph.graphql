@@ -219,6 +219,7 @@ type Offer {
   candidates: [User!]
   contactDetails: JSON
   description: String
+  id: ID
   name: String
   requirements: [JSON!]
   tags: [ID!]

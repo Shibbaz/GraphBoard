@@ -1,5 +1,6 @@
 module Types
   class OfferType < Types::BaseObject
+    field :id, ID, null: true
     field :name, String, null: true
     field :description, String, null: true
     field :requirements, [GraphQL::Types::JSON], null: true

@@ -10,7 +10,6 @@ module Concepts
           offer = T.must(event.data.fetch(:offer))
           candidates = T.must(offer.candidates)
           offer.candidates = candidates.concat([current_user_id])
-          offer.candidates = candidates.uniq
           offer.save!
         end
       end
