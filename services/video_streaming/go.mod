@@ -1,4 +1,4 @@
-module app
+module server
 
 go 1.18
 

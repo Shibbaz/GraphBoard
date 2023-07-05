@@ -2,32 +2,30 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"time"
-
-	"github.com/rs/cors"
 )
 
-func main() {
-	siteMux := http.NewServeMux()
-	st := &storageModel{bucket: "files", key: "video_id"}
+type App struct {
+	config *Config
+	server *http.Server
+}
 
-	siteMux.HandleFunc("/", st.ServeHTTP)
-	handler := cors.Default().Handler(siteMux)
-
-	port := ":8080"
+func newApp(config *Config) *App {
 	srv := &http.Server{
-		Addr:         port,
-		Handler:      handler,
-		ReadTimeout:  2 * time.Second,
-		WriteTimeout: 5 * time.Second,
-		IdleTimeout:  10 * time.Second,
-		ErrorLog:     log.Default(),
+		Addr:         config.Addr,
+		Handler:      config.Handler,
+		ReadTimeout:  config.ReadTimeout,
+		WriteTimeout: config.WriteTimeout,
+		IdleTimeout:  config.IdleTimeout,
+		ErrorLog:     config.ErrorLogger,
 	}
-	fmt.Print("service/streaming listening at port ", port)
-	if err := srv.ListenAndServe(); err != nil {
+	return &App{config: config, server: srv}
+}
+
+func (app *App) Listen() {
+	fmt.Print("service/streaming listening at port ", app.config.Addr)
+	if err := app.server.ListenAndServe(); err != nil {
 		panic(err)
 	}
-
+	return
 }
