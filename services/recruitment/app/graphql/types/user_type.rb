@@ -3,8 +3,12 @@ module Types
     key fields: ["id"]
     extend_type
     field :id, ID, null: false, external: true
-    field :created_offer, Types::OfferType.connection_type, null: true
-    field :applied_offers, Types::OfferType.connection_type, null: true
+    field :created_offers, [Types::OffersUserType], null: false
+    field :applied_offers, [Types::OffersUserType], null: false
+
+    def self.resolve_reference(object, _context)
+      {__typename: "Offer", id: object[:id]}
+    end
 
     def created_offers
       Offer.where(author: object[:id])

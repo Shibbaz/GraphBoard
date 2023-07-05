@@ -2,11 +2,13 @@ module Concepts
   module Videos
     module Commands
       class Create
+        extend T::Sig
+
         def call(event)
-          args = event.data.fetch(:args)
-          file = event.data.fetch(:file)
-          adapter = event.data.fetch(:adapter)
-          id = event.data.fetch(:id)
+          args = T.must(event.data.fetch(:args))
+          file = T.must(event.data.fetch(:file))
+          adapter = T.must(event.data.fetch(:adapter))
+          id = T.must(event.data.fetch(:id))
           video = adapter.create!(
             id: id,
             name: args[:name],

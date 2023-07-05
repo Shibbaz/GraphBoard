@@ -8,7 +8,7 @@ module Mutations
       Concepts::Videos::Repository.new.delete(video_id: video_id)
       {status: 200}
     rescue => e
-      GraphQL::ExecutionError.new(e.message)
+      raise GraphQL::ExecutionError.new(e.message)
     end
   end
 end

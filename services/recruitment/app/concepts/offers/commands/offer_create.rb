@@ -2,6 +2,7 @@ module Concepts
   module Offers
     module Commands
       class OfferCreate < ActiveJob::Base
+
         def call(event)
           id = event.data.fetch(:offer_id)
           adapter = event.data.fetch(:adapter)

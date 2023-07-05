@@ -1,9 +1,12 @@
+#typed: true
+
 module Mutations
   class CreateUser < Mutations::BaseMutation
     argument :auth_provider, Types::Input::AuthProviderCredentialsInput, required: false
     argument :informations, Types::Input::UserInput, required: true
   
     field :status, Integer, null: false
+
     def resolve(informations: nil, auth_provider: nil)
       Concepts::Users::Repository.new.create(
         informations: informations,

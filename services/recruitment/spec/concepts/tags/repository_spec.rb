@@ -16,10 +16,14 @@ RSpec.describe Concepts::Tags::Repository, type: :request do
       expect(event).to(have_published(TagWasCreated))
     end
 
+    it "expects to raise type error " do
+      expect{repository.create(informations: 0.6)}.to raise_error(TypeError)
+    end
+
     it "expects not to create tag" do
       expect {
         repository.create(
-          informations: nil
+          informations: {}
         )
       }.to raise_error(ArgumentError, "Please, pass params. Params not found")
     end
@@ -36,6 +40,10 @@ RSpec.describe Concepts::Tags::Repository, type: :request do
       )
       expect(event).to(have_published(TagWasDeleted))
       expect { tag.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "expects to raise type error " do
+      expect{repository.delete(tag_id: 0.6)}.to raise_error(TypeError)
     end
 
     it "expects to delete non-existing tag" do
@@ -66,6 +74,10 @@ RSpec.describe Concepts::Tags::Repository, type: :request do
       expect(event).to(have_published(TagWasUpdated))
       tag.reload
       expect(tag.name).to eq("New Tag Name")
+    end
+
+    it "expects to raise type error " do
+      expect{repository.create(tag_id: 0.6, informations: 0.6)}.to raise_error(TypeError)
     end
 
     it "expects to update non-existing tag" do

@@ -25,12 +25,7 @@ gem "graphql-rails-generators", "~> 1.1"
 
 gem "apollo_upload_server"
 
-gem "aws-sdk", "~> 3.1"
-
-gem "acidic_job", "~> 0.8.7"
-
-gem "sidekiq", "~> 7.1"
-
+gem 'aws-sdk-s3'
 gem "rails_event_store", "~> 2.9"
 gem "search_object_graphql"
 gem "graphql-fragment_cache"
@@ -39,3 +34,7 @@ gem "graphql-batch", "~> 0.5.3"
 group :test do
   gem "ruby_event_store-rspec"
 end
+gem 'sorbet', :group => :development
+gem 'sorbet-runtime'
+gem 'tapioca', require: false, :group => :development
+gem "ruby-lsp-rails", :group => :development

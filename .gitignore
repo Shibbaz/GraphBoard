@@ -9,3 +9,6 @@
 /gateway/src/dist/*
 services/video_streaming/.env
 services/video_streaming/go.sum
+/services/recruitment/sorbet/*
+/services/storage/sorbet/*
+/services/users/sorbet/*

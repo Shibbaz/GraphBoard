@@ -1,5 +1,6 @@
 module Types
   class OfferType < Types::BaseObject
+    field :id, ID, null: true
     field :name, String, null: true
     field :description, String, null: true
     field :requirements, [GraphQL::Types::JSON], null: true
@@ -8,12 +9,6 @@ module Types
     field :candidates, [Types::UserType], null: true
 
     field :contact_details, GraphQL::Types::JSON, null: true
-
-    def self.resolve_reference(object, _context)
-      cache_fragment(context: context, expires_in: 25.minutes) { 
-        RecordLoader.for(Offer).load(object[:id]) 
-      }
-    end
 
     def author
       cache_fragment(context: context, expires_in: 25.minutes) {
