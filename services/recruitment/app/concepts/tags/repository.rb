@@ -9,7 +9,7 @@ module Concepts
         @adapter = adapter
       end
 
-      sig do params(informations: T.nilable(T.any(Types::Input::TagInput, Hash))
+      sig do params(informations: T.any(Types::Input::TagInput, NilClass, Hash)
         ).returns(RailsEventStore::Client || ArgumentError) 
       end
       def create(informations:)
@@ -31,7 +31,7 @@ module Concepts
 
       sig do params(
           tag_id: String,
-          informations: T.nilable(T.any(Types::Input::TagInput, Hash))
+          informations: T.any(Types::Input::TagInput, NilClass, Hash)
         ).returns(RailsEventStore::Client || ArgumentError) 
       end
       def update(tag_id:, informations:)

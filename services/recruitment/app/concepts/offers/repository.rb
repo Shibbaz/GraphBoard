@@ -9,7 +9,7 @@ module Concepts
         @adapter = adapter
       end
 
-      sig do params(informations: T.nilable(T.any(Types::Input::OfferInput, Hash)), current_user_id: T.nilable(String))
+      sig do params(informations: T.any(Types::Input::OfferInput, Hash, NilClass), current_user_id: T.nilable(String))
         .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def create(informations:, current_user_id:)
         raise ArgumentError.new "Please, pass params. Params not found" if informations.empty? || current_user_id.empty?
@@ -26,7 +26,7 @@ module Concepts
         end
       end
 
-      sig do params(current_user_id: T.nilable(String), offer_id: T.nilable(String), informations: T.nilable(T.any(Types::Input::OfferInput, Hash)))
+      sig do params(current_user_id: T.nilable(String), offer_id: T.nilable(String), informations: T.any(Types::Input::OfferInput, Hash, NilClass))
         .returns(T.any(RailsEventStore::Client , T.class_of(ActiveRecord::RecordNotFound))) end
       def update(current_user_id:, offer_id:, informations:)
         offer = T.must(@adapter.find_by(id: offer_id, author: current_user_id))
