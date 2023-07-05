@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 )
 
@@ -10,7 +11,20 @@ func main() {
 	config := newConfig(siteMux)
 	app := newApp(config)
 
-	router.Listen()
-	app.Listen()
+	errors := make(chan error)
+	go func() {
+		successful := true
+		if !successful {
+			errors <- fmt.Errorf("Operation failed")
+		}
+		close(errors)
+	}()
+	err := <-errors
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		router.Listen()
+		app.Listen()
+	}
 	return
 }
