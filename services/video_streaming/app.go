@@ -17,7 +17,6 @@ func newApp(config *Config) *App {
 		ReadTimeout:  config.ReadTimeout,
 		WriteTimeout: config.WriteTimeout,
 		IdleTimeout:  config.IdleTimeout,
-		ErrorLog:     config.ErrorLogger,
 	}
 	return &App{config: config, server: srv}
 }

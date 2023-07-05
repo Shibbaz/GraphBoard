@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"time"
 
@@ -14,7 +13,6 @@ type Config struct {
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 	IdleTimeout  time.Duration
-	ErrorLogger  *log.Logger
 }
 
 func newConfig(siteMux *http.ServeMux) *Config {
@@ -25,7 +23,6 @@ func newConfig(siteMux *http.ServeMux) *Config {
 		ReadTimeout:  2 * time.Second,
 		WriteTimeout: 5 * time.Second,
 		IdleTimeout:  10 * time.Second,
-		ErrorLogger:  log.Default(),
 	}
 	return config
 }
