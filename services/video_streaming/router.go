@@ -1,15 +1,33 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+)
+
+type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)
 
 type Router struct {
-	server    *http.ServeMux
-	endpoints map[string]func(w http.ResponseWriter, r *http.Request)
+	server   *http.ServeMux
+	requests routerRequests
 }
 
 func (router *Router) Listen() {
-	for index, element := range router.endpoints {
-		router.server.HandleFunc(index, element)
+	errors := make(chan error)
+	go func() {
+		successful := true
+		if !successful {
+			errors <- fmt.Errorf("Operation failed")
+		}
+		close(errors)
+	}()
+	err := <-errors
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		for index, element := range router.requests {
+			router.server.HandleFunc(index, element)
+		}
 	}
 }
 
@@ -18,7 +36,7 @@ func newRouter(siteMux *http.ServeMux) *Router {
 
 	router := Router{
 		server: siteMux,
-		endpoints: map[string]func(w http.ResponseWriter, r *http.Request){
+		requests: routerRequests{
 			"/": st.ServeHTTP,
 		},
 	}
