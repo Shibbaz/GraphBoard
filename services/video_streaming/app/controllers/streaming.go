@@ -1,4 +1,4 @@
-package main
+package controllers
 
 import (
 	"bytes"
@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	_ "libs"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -36,7 +37,6 @@ func (st *storageModel) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func (st *storageModel) readMinioObject(key string) ([]byte, error) {
 	creds := credentials.NewEnvCredentials()
-
 	sess := getSession(creds)
 
 	s3c := s3.New(sess)

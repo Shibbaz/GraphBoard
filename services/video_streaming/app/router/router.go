@@ -1,8 +1,9 @@
-package main
+package router
 
 import (
 	"fmt"
 	"net/http"
+	_ "controllers"
 )
 
 type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)

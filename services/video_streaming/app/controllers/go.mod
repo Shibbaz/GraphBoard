@@ -1,4 +1,4 @@
-module video_streaming
+module controllers
 
 go 1.20
 

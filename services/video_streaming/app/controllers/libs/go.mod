@@ -1,4 +1,4 @@
-module video_streaming
+module libs
 
 go 1.20
 

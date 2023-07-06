@@ -1,4 +1,4 @@
-package main
+package libs
 
 import (
 	"fmt"
@@ -10,7 +10,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 	session "github.com/aws/aws-sdk-go/aws/session"
 )
-
 func authErrorHandle(w http.ResponseWriter, r *http.Request, start *time.Time) bool {
 	header_authorization := r.Header.Get("HTTP_AUTHORIZATION")
 	if header_authorization == "" {
