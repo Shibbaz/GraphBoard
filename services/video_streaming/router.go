@@ -37,7 +37,7 @@ func newRouter(siteMux *http.ServeMux) *Router {
 	router := Router{
 		server: siteMux,
 		requests: routerRequests{
-			"/": st.ServeHTTP,
+			"/videos": st.ServeHTTP,
 		},
 	}
 	return &router
