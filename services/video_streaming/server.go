@@ -3,19 +3,24 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	. "config"
+	. "router"
+	. "app"
 )
 
 func main() {
 	siteMux := http.NewServeMux()
-	router := newRouter(siteMux)
-	config := newConfig(siteMux)
-	app := newApp(config)
+	router := NewRouter(siteMux)
+	configuration := NewConfig(siteMux)
+	application := NewApp(configuration)
+
 
 	errors := make(chan error)
 	go func() {
 		successful := true
 		if !successful {
-			errors <- fmt.Errorf("Operation failed")
+			errors <- fmt.Errorf("operation failed")
 		}
 		close(errors)
 	}()
@@ -24,7 +29,7 @@ func main() {
 		fmt.Println(err.Error())
 	} else {
 		router.Listen()
-		app.Listen()
+		application.Listen()
 	}
 	return
 }

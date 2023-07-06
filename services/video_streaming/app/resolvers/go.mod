@@ -1,4 +1,4 @@
-module video_streaming
+module resolvers
 
 go 1.20
 

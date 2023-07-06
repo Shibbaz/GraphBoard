@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"net/http"
@@ -15,7 +15,7 @@ type Config struct {
 	IdleTimeout  time.Duration
 }
 
-func newConfig(siteMux *http.ServeMux) *Config {
+func NewConfig(siteMux *http.ServeMux) *Config {
 	handler := cors.Default().Handler(siteMux)
 	config := &Config{
 		Addr:         ":8080",

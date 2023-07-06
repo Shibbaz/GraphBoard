@@ -12,3 +12,9 @@ services/video_streaming/go.sum
 /services/recruitment/sorbet/*
 /services/storage/sorbet/*
 /services/users/sorbet/*
+/services/video_streaming/go.sum
+/services/video_streaming/app/go.sum
+/services/video_streaming/app/config/go.sum
+/services/video_streaming/app/library/go.sum
+/services/video_streaming/app/resolvers/go.sum
+/services/video_streaming/app/router/go.sum

@@ -1,16 +1,17 @@
-package main
+package app
 
-import (
+import(
+	configuration "config"
 	"fmt"
 	"net/http"
 )
 
 type App struct {
-	config *Config
+	config *configuration.Config
 	server *http.Server
 }
 
-func newApp(config *Config) *App {
+func NewApp(config *configuration.Config) *App {
 	srv := &http.Server{
 		Addr:         config.Addr,
 		Handler:      config.Handler,

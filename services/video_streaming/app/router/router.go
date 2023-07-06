@@ -1,8 +1,10 @@
-package main
+package router
 
 import (
 	"fmt"
 	"net/http"
+
+	. "resolvers"
 )
 
 type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)
@@ -17,7 +19,7 @@ func (router *Router) Listen() {
 	go func() {
 		successful := true
 		if !successful {
-			errors <- fmt.Errorf("Operation failed")
+			errors <- fmt.Errorf("operation failed")
 		}
 		close(errors)
 	}()
@@ -31,13 +33,13 @@ func (router *Router) Listen() {
 	}
 }
 
-func newRouter(siteMux *http.ServeMux) *Router {
-	st := &storageModel{bucket: "files", key: "video_id"}
+func NewRouter(siteMux *http.ServeMux) *Router {
+	st := &Storage{Bucket: "files", Key: "video_id"}
 
 	router := Router{
 		server: siteMux,
 		requests: routerRequests{
-			"/videos": st.ServeHTTP,
+			"/videos": st.StreamVideoResolver,
 		},
 	}
 	return &router
