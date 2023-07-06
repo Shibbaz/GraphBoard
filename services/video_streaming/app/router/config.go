@@ -3,8 +3,6 @@ package router
 import (
 	"fmt"
 	"net/http"
-
-	. "resolvers"
 )
 
 type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)
@@ -33,14 +31,3 @@ func (router *Router) Listen() {
 	}
 }
 
-func NewRouter(siteMux *http.ServeMux) *Router {
-	st := &Storage{Bucket: "files", Key: "video_id"}
-
-	router := Router{
-		server: siteMux,
-		requests: routerRequests{
-			"/videos": st.StreamVideoResolver,
-		},
-	}
-	return &router
-}

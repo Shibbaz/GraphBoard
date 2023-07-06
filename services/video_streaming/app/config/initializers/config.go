@@ -1,4 +1,4 @@
-package config
+package initializers
 
 import (
 	"net/http"

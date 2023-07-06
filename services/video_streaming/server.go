@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	. "config"
 	. "router"
-	. "app"
+	. "initializers"
 )
 
 func main() {

@@ -4,6 +4,7 @@ use (
 	.
 	./app
 	./app/config
+	./app/config/initializers
 	./app/resolvers
 	./app/router
 	./app/library
