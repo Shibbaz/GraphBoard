@@ -5,7 +5,6 @@ use (
 	./app
 	./app/config
 	./app/controllers
-	./app/controllers/libs
-
 	./app/router
+	./app/library
 )

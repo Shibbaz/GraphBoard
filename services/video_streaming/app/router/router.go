@@ -3,7 +3,7 @@ package router
 import (
 	"fmt"
 	"net/http"
-	_ "controllers"
+	"controllers"
 )
 
 type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)
@@ -32,8 +32,8 @@ func (router *Router) Listen() {
 	}
 }
 
-func newRouter(siteMux *http.ServeMux) *Router {
-	st := &storageModel{bucket: "files", key: "video_id"}
+func NewRouter(siteMux *http.ServeMux) *Router {
+	st := &controllers.StorageModel{Bucket: "files", Key: "video_id"}
 
 	router := Router{
 		server: siteMux,
