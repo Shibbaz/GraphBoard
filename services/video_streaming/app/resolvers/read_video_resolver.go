@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
+	"library"
 
-	. "library"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -20,7 +20,7 @@ type Storage struct {
 
 func (st *Storage) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
-	if AuthErrorHandle(w, r, &start) {
+	if library.AuthErrorHandle(w, r, &start) {
 		return
 	}
 
@@ -29,14 +29,14 @@ func (st *Storage) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	LoggerRequest(r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
+	library.LoggerRequest(r.RemoteAddr, r.Method, r.URL.Path, time.Since(start))
 	reader := bytes.NewReader(buff)
 	http.ServeContent(w, r, key, time.Now(), reader)
 }
 
 func (st *Storage) readMinioObject(key string) ([]byte, error) {
 	creds := credentials.NewEnvCredentials()
-	sess := GetSession(creds)
+	sess := library.GetSession(creds)
 
 	s3c := s3.New(sess)
 	bucket := &st.Bucket
