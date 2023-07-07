@@ -7,13 +7,13 @@ import (
 	session "github.com/aws/aws-sdk-go/aws/session"
 )
 
-func GetSession(creds *credentials.Credentials) *session.Session {
+func GetSession(creds *credentials.Credentials, url string) *session.Session {
 	data := session.Must(session.NewSessionWithOptions(session.Options{
 		Config: aws.Config{
 			S3ForcePathStyle: aws.Bool(true),
 			Credentials:      creds,
 
-			EndpointResolver: endpoints.ResolverFunc(GetResolver("http://localhost:9000")),
+			EndpointResolver: endpoints.ResolverFunc(GetResolver(url)),
 		},
 		SharedConfigState: session.SharedConfigEnable,
 	}))

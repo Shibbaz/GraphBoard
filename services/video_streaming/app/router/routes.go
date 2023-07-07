@@ -9,7 +9,7 @@ import(
 
 func NewRouter(siteMux *http.ServeMux) *Router {
 	creds := credentials.NewEnvCredentials()
-	st := &resolvers.Storage{Bucket: "files", Key: "video_id", Session: library.GetSession(creds)}
+	st := &resolvers.Storage{Bucket: "files", Key: "video_id", Session: library.GetSession(creds, "http://localhost:9000")}
 	router := Router{
 		server: siteMux,
 		requests: routerRequests{
