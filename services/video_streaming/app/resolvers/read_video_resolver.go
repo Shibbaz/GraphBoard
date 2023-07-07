@@ -9,13 +9,14 @@ import (
 	"library"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/s3"
+	session "github.com/aws/aws-sdk-go/aws/session"
 )
 
 type Storage struct {
 	Bucket string
 	Key    string
+	Session *session.Session
 }
 
 func (st *Storage) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +26,7 @@ func (st *Storage) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
 	}
 
 	key := r.URL.Query().Get(st.Key)
-	buff, err := st.readMinioObject(key)
+	buff, err := st.readMinioObject(key, st.Session)
 	if err != nil {
 		return
 	}
@@ -34,10 +35,7 @@ func (st *Storage) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
 	http.ServeContent(w, r, key, time.Now(), reader)
 }
 
-func (st *Storage) readMinioObject(key string) ([]byte, error) {
-	creds := credentials.NewEnvCredentials()
-	sess := library.GetSession(creds)
-
+func (st *Storage) readMinioObject(key string, sess *session.Session) ([]byte, error) {
 	s3c := s3.New(sess)
 	bucket := &st.Bucket
 

@@ -3,11 +3,13 @@ package router
 import(
 	"net/http"
 	resolvers "resolvers"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"library"
 )
 
 func NewRouter(siteMux *http.ServeMux) *Router {
-	st := &resolvers.Storage{Bucket: "files", Key: "video_id"}
-
+	creds := credentials.NewEnvCredentials()
+	st := &resolvers.Storage{Bucket: "files", Key: "video_id", Session: library.GetSession(creds)}
 	router := Router{
 		server: siteMux,
 		requests: routerRequests{
