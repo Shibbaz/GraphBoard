@@ -2,18 +2,20 @@ package router
 
 import(
 	"net/http"
-	resolvers "resolvers"
+	"resolvers"
 	"github.com/aws/aws-sdk-go/aws/credentials"
-	"library"
+	. "aws_helpers"
+	"models"
 )
 
 func NewRouter(siteMux *http.ServeMux) *Router {
 	creds := credentials.NewEnvCredentials()
-	st := &resolvers.Storage{Bucket: "files", Key: "video_id", Session: library.GetSession(creds, "http://localhost:9000")}
+	storage := &models.Storage{Bucket: "files", Key: "video_id", Session: GetSession(creds, "http://localhost:9000")}
+	resolver := resolvers.Resolver{Payload: storage}
 	router := Router{
 		server: siteMux,
 		requests: routerRequests{
-			"/videos": st.StreamVideoResolver,
+			"/videos": resolver.StreamVideoResolver,
 		},
 	}
 	return &router

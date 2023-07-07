@@ -1,7 +1,8 @@
-package library
+package aws_helpers
 import(
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 )
+
 func GetResolver(url string) endpoints.ResolverFunc {
 	defaultResolver := endpoints.DefaultResolver()
 

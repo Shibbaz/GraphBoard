@@ -8,4 +8,7 @@ use (
 	./app/resolvers
 	./app/router
 	./app/library
+	./app/models
+	./app/library/aws_helpers
+
 )

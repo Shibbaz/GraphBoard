@@ -4,8 +4,10 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"library"
+	"models"
+	"unsafe"
 
+	. "aws_helpers"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -18,7 +20,7 @@ func NewS3(uri string) ObjectStore {
 	// TODO Add URI to session
 	creds := credentials.NewEnvCredentials()
 
-	sess := library.GetSession(creds, uri)
+	sess := GetSession(creds, uri)
 	client := s3.New(sess)
 
 	return ObjectStore{
@@ -41,14 +43,16 @@ func (svc ObjectStore) GetObject(in *s3.GetObjectInput) (*s3.GetObjectOutput, er
 func TestReadVideoResolverExpectsFailure(t *testing.T) {
 	creds := credentials.NewEnvCredentials()
 
-	sess := library.GetSession(creds, "https://localhost:9000")
-	st := Storage{
+	sess := GetSession(creds, "https://localhost:9000")
+	payload := models.Storage{
 		Bucket: "test",
 		Key: "video_id",
 		Session: sess,
 	}
+	casted_payload := (*models.Storage)(unsafe.Pointer(&payload))
+	resolver := Resolver{Payload: casted_payload}
 	// Create mock receiver
-	ts := httptest.NewServer(http.HandlerFunc(st.StreamVideoResolver))
+	ts := httptest.NewServer(http.HandlerFunc(resolver.StreamVideoResolver))
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 
@@ -61,14 +65,17 @@ func TestReadVideoResolverExpectsFailure(t *testing.T) {
 func TestReadVideoResolverExpectsSuccess(t *testing.T) {
 	creds := credentials.NewEnvCredentials()
 
-	sess := library.GetSession(creds, "http://localhost:9000")
-	st := Storage{
+	sess := GetSession(creds, "http://localhost:9000")
+	payload := models.Storage{
 		Bucket: "test",
 		Key: "dce63198-89ca-471e-95fb-092bc4cc92f4.mp4",
 		Session: sess,
 	}
+	casted_payload := (*models.Storage)(unsafe.Pointer(&payload))
+	resolver := Resolver{Payload: casted_payload}
+
 	// Create mock receiver
-	ts := httptest.NewServer(http.HandlerFunc(st.StreamVideoResolver))
+	ts := httptest.NewServer(http.HandlerFunc(resolver.StreamVideoResolver))
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 
@@ -94,14 +101,16 @@ func TestReadVideoResolverExpectsSuccess(t *testing.T) {
 func TestReadVideoResolverExpectsNoFile(t *testing.T) {
 	creds := credentials.NewEnvCredentials()
 
-	sess := library.GetSession(creds, "http://localhost:9000")
-	st := Storage{
+	sess := GetSession(creds, "http://localhost:9000")
+	payload := models.Storage{
 		Bucket: "test",
 		Key: "filedoesnotexist",
 		Session: sess,
 	}
+	casted_payload := (*models.Storage)(unsafe.Pointer(&payload))
+	resolver := Resolver{Payload: casted_payload}
 	// Create mock receiver
-	ts := httptest.NewServer(http.HandlerFunc(st.StreamVideoResolver))
+	ts := httptest.NewServer(http.HandlerFunc(resolver.StreamVideoResolver))
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 

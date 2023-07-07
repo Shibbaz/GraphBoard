@@ -3,6 +3,7 @@ package initializers
 import(
 	"fmt"
 	"net/http"
+	. "config"
 )
 
 type App struct {

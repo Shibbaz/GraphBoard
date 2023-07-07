@@ -1,4 +1,4 @@
-package library
+package aws_helpers
 
 import (
 	"github.com/aws/aws-sdk-go/aws"

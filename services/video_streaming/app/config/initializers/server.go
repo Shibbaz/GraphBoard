@@ -2,6 +2,7 @@ package initializers
 
 import(
 	"net/http"
+	. "config"
 )
 
 func NewServer(config *Config) *http.Server{
