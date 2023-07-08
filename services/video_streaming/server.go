@@ -2,6 +2,7 @@ package main
 
 import (
 	. "initializers"
+	. "library"
 )
 
 func main() {
@@ -11,5 +12,5 @@ func main() {
 		App: app,
 		Router: router,
 	}
-	boot.Async(boot.Load)
+	Async(boot.Load)
 }
