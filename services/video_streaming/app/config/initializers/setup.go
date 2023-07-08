@@ -7,9 +7,12 @@ import (
 	. "router"
 )
 
-type Boot struct {}
+type Boot struct {
+	App *App
+	Router *Router
+}
 
-func (boot *Boot) Setup() (*Router, *App){
+func Setup()(*Router, *App){
 	siteMux := http.NewServeMux()
 	router := NewRouter(siteMux)
 	configuration := NewConfig(siteMux)
@@ -17,12 +20,12 @@ func (boot *Boot) Setup() (*Router, *App){
 	return router, application	
 }
 
-func (boot *Boot) Load(app *App, router *Router){
-	router.Listen()
-	app.Listen()
+func (boot *Boot) Load(){
+	boot.Router.Listen()
+	boot.App.Listen()
 }
 
-func (boot *Boot) Async(callback interface{}, app *App, router *Router){
+func (boot *Boot) Async(callback interface{}){
 	errors := make(chan error)
 	go func() {
 		successful := true
@@ -35,7 +38,7 @@ func (boot *Boot) Async(callback interface{}, app *App, router *Router){
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		callback.(func(app *App, router *Router))(app, router)
+		callback.(func())()
 	}
 	return
 }

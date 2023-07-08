@@ -5,7 +5,11 @@ import (
 )
 
 func main() {
-	boot := Boot{}
-	router, app := boot.Setup()
-	boot.Async(boot.Load, app, router)
+	router, app := Setup()
+
+	boot := Boot{
+		App: app,
+		Router: router,
+	}
+	boot.Async(boot.Load)
 }
