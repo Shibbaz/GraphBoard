@@ -56,7 +56,7 @@ func TestReadVideoResolverExpectsFailure(t *testing.T) {
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 
-	e.GET("/videos?video_id=dce63198-89ca-471e-95fb-092bc4cc92f4.mp4").
+	e.GET("/?video_id=dce63198-89ca-471e-95fb-092bc4cc92f4.mp4").
 		Expect().
 		Status(http.StatusOK).
 		JSON().Object().ContainsKey("Error").HasValue("Error", "NoTokenProvidedError")
@@ -79,7 +79,7 @@ func TestReadVideoResolverExpectsSuccess(t *testing.T) {
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 
-	e.GET("/videos?video_id=dce63198-89ca-471e-95fb-092bc4cc92f4.mp4").
+	e.GET("/?video_id=dce63198-89ca-471e-95fb-092bc4cc92f4.mp4").
 		Expect().
 		Status(http.StatusOK).
 		JSON().Object()
@@ -114,7 +114,7 @@ func TestReadVideoResolverExpectsNoFile(t *testing.T) {
 	defer ts.Close()
 	e := httpexpect.Default(t, ts.URL)
 
-	e.GET("/videos?video_id=filedoesnotexist").
+	e.GET("/?video_id=filedoesnotexist").
 		Expect().
 		Status(http.StatusOK).
 		JSON().Object()

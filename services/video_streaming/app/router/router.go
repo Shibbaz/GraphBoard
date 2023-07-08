@@ -26,7 +26,7 @@ func NewRouter(siteMux *http.ServeMux, requests RouterRequests) *Router {
 
 func NewRouters(siteMux *http.ServeMux) *map[string]*Router{
 	videosRouter := NewRouter(siteMux, RouterRequests{
-			"/videos": NewVideoResolver().StreamVideoResolver,
+			"/": NewVideoResolver().StreamVideoResolver,
 		},
 	)
 	routers := &map[string]*Router{
