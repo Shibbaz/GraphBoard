@@ -1,16 +1,16 @@
 package initializers
 
-import (
-	. "library"
+import(
 	. "router"
+	. "library"
 )
 
 type Boot struct {
 	App *App
-	Router *Router
+	Gateway *Gateway
 }
 
 func (boot *Boot) Load(){
-	Async(boot.Router.Listen)
+	Async(boot.Gateway.Listen)
 	Async(boot.App.Listen)
 }

@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	router, app := Setup()
+	gateway, app := Setup()
 
 	boot := Boot{
 		App: app,
-		Router: router,
+		Gateway: gateway,
 	}
 	Async(boot.Load)
 }

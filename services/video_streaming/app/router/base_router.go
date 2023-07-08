@@ -3,12 +3,11 @@ package router
 import (
 	"net/http"
 )
-
-type routerRequests map[string]func(w http.ResponseWriter, r *http.Request)
+type RouterRequests map[string]func(w http.ResponseWriter, r *http.Request)
 
 type Router struct {
 	server   *http.ServeMux
-	requests routerRequests
+	requests RouterRequests
 }
 
 func (router *Router) Listen() {
@@ -16,4 +15,3 @@ func (router *Router) Listen() {
 			router.server.HandleFunc(index, element)
 	}
 }
-

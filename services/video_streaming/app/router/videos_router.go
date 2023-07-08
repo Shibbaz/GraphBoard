@@ -1,17 +1,14 @@
-package initializers
+package router
 import (
-	"net/http"
 	"resolvers"
 	"models"
+	"net/http"
 
-	. "config"
-	. "router"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	. "aws_helpers"
 )
 
-func Setup()(*Gateway, *App){
-	siteMux := http.NewServeMux()
+func NewVideosRouter(siteMux *http.ServeMux) *Router{
 	creds := credentials.NewEnvCredentials()
 	storage := &models.Storage{Bucket: "files", Key: "video_id", Session: GetSession(creds, "http://localhost:9000")}
 	resolver := resolvers.Resolver{Payload: storage}
@@ -19,14 +16,5 @@ func Setup()(*Gateway, *App){
 			"/videos": resolver.StreamVideoResolver,
 		},
 	)
-	routers := map[string]*Router{
-		"/videos": videosRouter,
-	}
-	gateway := Gateway{
-		Routers: routers,
-
-	}
-	configuration := NewConfig(siteMux)
-	application := NewApp(configuration)
-	return &gateway, application	
+	return videosRouter
 }
