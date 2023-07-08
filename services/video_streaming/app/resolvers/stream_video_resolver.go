@@ -6,7 +6,16 @@ import (
 	"time"
 	"library"
 	"models"
+
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	. "aws_helpers"
 )
+func NewVideoResolver() *Resolver{
+	creds := credentials.NewEnvCredentials()
+	storage := &models.Storage{Bucket: "files", Key: "video_id", Session: GetSession(creds, "http://localhost:9000")}
+	resolver := Resolver{Payload: storage}
+	return &resolver
+}
 
 func (resolver *Resolver) StreamVideoResolver(w http.ResponseWriter, r *http.Request) {
 	start := time.Now()
