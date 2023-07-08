@@ -1,4 +1,5 @@
 package initializers
+
 import (
 	"net/http"
 
@@ -6,7 +7,7 @@ import (
 	. "router"
 )
 
-func Setup()(*Gateway, *App){
+func Setup() *Boot {
 	siteMux := http.NewServeMux()
 	routers := NewRouters(siteMux)
 	gateway := Gateway{
@@ -14,6 +15,10 @@ func Setup()(*Gateway, *App){
 
 	}
 	configuration := NewConfig(siteMux)
-	application := NewApp(configuration)
-	return &gateway, application	
+	app := NewApp(configuration)
+	
+	return &Boot{
+		App: app,
+		Gateway: &gateway,
+	}
 }
