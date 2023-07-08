@@ -9,13 +9,11 @@ import (
 
 func Setup() *Boot {
 	siteMux := http.NewServeMux()
-	routers := NewRouters(siteMux)
 	gateway := Gateway{
-		Routers: routers,
+		Routers: NewRouters(siteMux),
 
 	}
-	configuration := NewConfig(siteMux)
-	app := NewApp(configuration)
+	app := NewApp(NewConfig(siteMux))
 	
 	return &Boot{
 		App: app,
