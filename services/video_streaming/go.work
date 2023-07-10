@@ -1,0 +1,14 @@
+go 1.20
+
+use (
+	.
+	./app
+	./app/config
+	./app/config/initializers
+	./app/resolvers
+	./app/router
+	./app/library
+	./app/models
+	./app/library/aws_helpers
+
+)
