@@ -16,7 +16,7 @@ This project is gonna  consist of 4 services
 - [x] Authentication (services/users) -> authenticate user
 - [x] Upload (services/storage) -> to Minio -> upload content
 - [x] Job Offers (services/recruitment) -> apply to job offer
-- [] Video streaming - > streaming video files that were uploaded throguh services/storage
+- [x] Video streaming - > streaming video files that were uploaded throguh services/storage
 
 ## Thoughts
 Currently Gateway through typescript && nodejs, but eventually We desire performance, so maybe Rust?
@@ -26,3 +26,28 @@ There is idea that to seperate streaming videos outside the router and create ne
 
 ## Draft of architecture.
 ![Zrzut ekranu 2023-06-23 002441](https://github.com/Shibbaz/GraphBoard/blob/main/.excalidraw.png)
+
+
+## How to Run
+# Credentials
+  - [x] EDITOR=vim rails credentials:edit
+  - [x] Copy secret_key_base from credentials on users/service
+  - [x] Paste it as users_service_secret_key_base in credentials of services recruitment and storage
+  - [x] Add credentials S3_Endpoint, S3_User_Name, S3_SECRET_KEY in storage service credentials
+
+# minio server
+  - [x] install minio https://www.digitalocean.com/community/tutorials/how-to-set-up-minio-object-storage-server-in-standalone-mode-on-ubuntu-20-04
+  - [x] run server
+
+ # Initialize all services instances
+  - [x] rails db:create
+  - [x] rails db:migrate
+  - [x] rails s -p $port
+
+# Run Gateway
+- [x] go gateway/ and run ts-node index.ts
+      
+# Default Ip adresses of subgraphs, once configured use rails s $port => those $ports accordingly assigned to the service.
+  - [x] recruitments: http://localhost:3002/graphql
+  - [x] users: http://localhost:3001/graphql
+  - [x] storages: http://localhost:3000/graphql
